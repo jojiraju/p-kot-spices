@@ -2,7 +2,8 @@
   min-height: 100vh;
   background-color: var(--color-bg);
   color: var(--color-text);
-  padding-top: 100px; /* Space for header */
+  padding-top: 100px;
+  /* Space for header */
   position: relative;
 }
 
@@ -155,14 +156,176 @@
     gap: 40px;
     padding: 20px;
   }
+
   .productTitle {
     font-size: 3rem;
   }
+
   .main {
     padding-top: 80px;
   }
+
   .backBtn {
     top: 20px;
     left: 20px;
   }
+}
+
+/* Loader */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.loaderBrand {
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  color: var(--color-gold);
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+.loaderBarWrap {
+  width: min(360px, 60vw);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+
+.loaderBar {
+  height: 100%;
+  background: var(--color-gold);
+  transition: width 0.05s linear;
+}
+
+.loaderPct {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 300;
+}
+
+/* Hero visibility */
+.hero {
+  opacity: 0;
+  transition: opacity 1s ease 0.3s;
+}
+
+.heroVisible {
+  opacity: 1;
+}
+
+/* Tip bar */
+.heroTip {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(201, 169, 110, 0.55);
+  font-weight: 300;
+  white-space: nowrap;
+}
+
+.heroTip em {
+  color: rgba(201, 169, 110, 0.9);
+  font-style: normal;
+}
+
+/* Eyebrow */
+.heroEyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--color-gold);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+/* Vertical decorative lines */
+.vlineTop,
+.vlineBottom {
+  position: absolute;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(201, 169, 110, 0.3) 50%, transparent);
+}
+
+.vlineTop {
+  top: 0;
+  height: 90px;
+  animation: lineGrow 1.5s ease 1.2s both;
+}
+
+.vlineBottom {
+  bottom: 90px;
+  height: 60px;
+  animation: lineGrow 1.5s ease 1.5s both;
+}
+
+@keyframes lineGrow {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+/* Floating product */
+.heroProduct {
+  position: absolute;
+  bottom: 10%;
+  right: 7%;
+  width: min(280px, 38vw);
+  z-index: 3;
+  filter: drop-shadow(0 40px 80px rgba(0, 0, 0, 0.6));
+  animation: floatPkt 6s ease-in-out infinite;
+}
+
+@keyframes floatPkt {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(2deg);
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(2deg);
+  }
+}
+
+.heroProduct img {
+  width: 100%;
+}
+
+/* Grain texture */
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url('/grain.png');
+  /* or use SVG noise filter */
+  background-size: 200px;
+}
+
+/* Scroll hint */
+.scrollHint {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 10px;
+  display: block;
 }

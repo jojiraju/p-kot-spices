@@ -1,83 +1,107 @@
 'use client';
 
-import { use } from 'react';
+import { useParams } from 'next/navigation';
+import { products } from '@/data/products';
 import Link from 'next/link';
-import { ArrowLeft, ShoppingBag } from 'lucide-react';
-import styles from './page.module.css';
+import { ChevronLeft, MessageCircle, Scale, Package } from 'lucide-react';
+import styles from './product.module.css';
+import { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 
-// Mock data database for demonstration
-const productsDb = {
-  'premium-blend': {
-    title: 'Premium Spice Blend',
-    price: '$24.00',
-    description: 'Hand-pounded and perfectly balanced for an authentic, rich taste. Perfect for curries and traditional marinades. This master blend brings together 15 distinct whole spices roasted to perfection, creating a symphony of warmth and complex flavor notes that will elevate any dish.',
-    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=1200&auto=format&fit=crop',
-    origin: 'Kerala, India',
-    process: 'Stone-Ground',
-    tastingNotes: 'Warm, Earthy, Complex',
-    weight: '250g'
-  },
-  'whole-heritage': {
-    title: 'Whole Heritage Spices',
-    price: '$28.00',
-    description: 'Sourced directly from our finest partner plantations, ensuring every pod and seed holds its maximum natural aroma. These whole spices have been carefully hand-selected for their size, oil content, and flawless appearance. Perfect for infusing oils, broths, and slow-cooked masterpieces.',
-    image: 'https://images.unsplash.com/photo-1564149504298-00c351fd7f16?q=80&w=1200&auto=format&fit=crop',
-    origin: 'Malabar Coast',
-    process: 'Sun-Dried',
-    tastingNotes: 'Aromatic, Pungent, Fresh',
-    weight: '150g'
+export default function ProductDetail() {
+  const params = useParams();
+  const product = products.find((p) => p.id === params.id);
+  const containerRef = useRef(null);
+
+  const weightOptions = [
+    { label: '100g', value: 0.1 },
+    { label: '250g', value: 0.25 },
+    { label: '500g', value: 0.5 },
+    { label: '1kg', value: 1 },
+    { label: '5kg', value: 5 },
+  ];
+
+  const [selectedWeight, setSelectedWeight] = useState(weightOptions[3]); // Default 1kg
+
+  useEffect(() => {
+    if (!product) return;
+    
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.fromTo(`.${styles.productImageSection}`, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1.5 })
+      .fromTo(`.${styles.productContentSection}`, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1.5 }, '-=1.2')
+      .fromTo(`.${styles.backBtn}`, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1 }, '-=1');
+  }, [product]);
+
+  if (!product) {
+    return (
+      <div className={styles.notFound}>
+        <h1>Product Not Found</h1>
+        <Link href="/">Back to Home</Link>
+      </div>
+    );
   }
-};
 
-export default function ProductPage({ params }) {
-  // Unwrap params using React.use() as required in Next.js 15+ for async segments
-  const resolvedParams = use(params);
-  const productId = resolvedParams.id;
-  
-  const product = productsDb[productId] || productsDb['premium-blend'];
+  const calculatedPrice = Math.round(parseFloat(product.price.replace(/,/g, '')) * selectedWeight.value);
+  const formattedPrice = new Intl.NumberFormat('en-IN').format(calculatedPrice);
+
+  const whatsappLink = `https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ₹${formattedPrice} \nPlease provide payment details.`)}`;
 
   return (
-    <main className={styles.main}>
-      <Link href="/" className={styles.backBtn}>
-        <ArrowLeft size={18} /> Back to Collection
+    <main className={styles.productDetailMain} ref={containerRef}>
+      <Link href="/products" className={styles.backBtn}>
+        <ChevronLeft size={20} /> BACK TO COLLECTION
       </Link>
 
-      <div className={styles.productContainer}>
-        <div className={styles.imageCol}>
-          <img src={product.image} alt={product.title} className={styles.productImage} />
+      <div className={styles.productDetailGrid}>
+        {/* Left: Image */}
+        <div className={styles.productImageSection}>
+          <div className={styles.imageContainer}>
+            <img src={product.image} alt={product.name} className={styles.detailImage} />
+            <div className={styles.imageOverlay}></div>
+          </div>
         </div>
 
-        <div className={styles.infoCol}>
-          <div className={styles.productBreadcrumb}>P-KOT Spices Collection</div>
-          <h1 className={styles.productTitle}>{product.title}</h1>
-          <div className={styles.productPrice}>{product.price}</div>
-          
-          <p className={styles.productDesc}>{product.description}</p>
-          
-          <div className={styles.divider}></div>
-          
-          <div className={styles.metaGrid}>
-            <div className={styles.metaItem}>
-              <h4>Origin</h4>
-              <p>{product.origin}</p>
-            </div>
-            <div className={styles.metaItem}>
-              <h4>Process</h4>
-              <p>{product.process}</p>
-            </div>
-            <div className={styles.metaItem}>
-              <h4>Tasting Notes</h4>
-              <p>{product.tastingNotes}</p>
-            </div>
-            <div className={styles.metaItem}>
-              <h4>Net Weight</h4>
-              <p>{product.weight}</p>
+        {/* Right: Content */}
+        <div className={styles.productContentSection}>
+          <div className={styles.productHeader}>
+            <span className={styles.productId}>PRODUCT 0{products.indexOf(product) + 1}</span>
+            <h1 className={styles.productTitle}>{product.name}</h1>
+            <div className={styles.priceTag}>
+              ₹{formattedPrice} <span className={styles.unitText}>/ {selectedWeight.label}</span>
             </div>
           </div>
-          
-          <button className={styles.addToCartBtn}>
-            <ShoppingBag size={20} /> Add to Cart
-          </button>
+
+          <div className={styles.selectorSection}>
+            <div className={styles.selectorLabel}>
+              <Scale size={16} /> SELECT QUANTITY
+            </div>
+            <div className={styles.weightPicker}>
+              {weightOptions.map((opt) => (
+                <button
+                  key={opt.label}
+                  className={`${styles.weightBtn} ${selectedWeight.label === opt.label ? styles.active : ''}`}
+                  onClick={() => setSelectedWeight(opt)}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.productDescription}>
+            <p className={styles.mainDesc}>{product.description}</p>
+            <div className={styles.detailsBox}>
+              <h3><Package size={18} /> Specifications</h3>
+              <p>{product.details}</p>
+            </div>
+          </div>
+
+          <div className={styles.ctaSection}>
+            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.whatsappBtn}>
+              <MessageCircle size={20} /> BUY NOW
+            </a>
+            <p className={styles.ctaNote}>* Prices are calculated based on your selected weight.</p>
+          </div>
         </div>
       </div>
     </main>
