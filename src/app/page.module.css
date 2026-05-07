@@ -190,7 +190,7 @@
   letter-spacing: 0.15em;
   border: 1px solid rgba(249, 168, 37, 0.3);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4),
-              inset 0 0 20px rgba(249, 168, 37, 0.05);
+    inset 0 0 20px rgba(249, 168, 37, 0.05);
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
@@ -299,45 +299,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  clip-path: inset(0 round 150px 15px 150px 15px);
-  box-shadow: 0 80px 160px rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+  /* Remove complex clip-path */
   z-index: 1;
 }
 
-.sequenceCanvasWrapper::before {
-  content: '';
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
-  background: radial-gradient(circle at center, rgba(249, 168, 37, 0.1) 0%, transparent 70%);
-  border: 1px solid rgba(249, 168, 37, 0.2);
-  clip-path: inset(0 round 150px 15px 150px 15px);
-  z-index: -1;
-  opacity: 0.5;
-  transition: all 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+.sequenceCanvas {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* Significantly reduced mask - showing more of the image */
+  mask-image: radial-gradient(circle at 20% 20%, black 90%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle at 20% 20%, black 90%, transparent 70%);
 }
 
-.sequenceCanvasWrapper:hover::before {
-  opacity: 0.8;
-  transform: scale(1.05);
-}
-
+/* Permanent Solid Shroud - Lightened for more background visibility */
 .sequenceCanvasWrapper::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%),
-              linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 40%);
+  inset: -10px;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 20%, #000 95%),
+    linear-gradient(to right, #000 0%, #000 4%, transparent 40%, transparent 60%, #000 96%, #000 100%),
+    linear-gradient(to bottom, #000 0%, #000 4%, transparent 40%, transparent 60%, #000 96%, #000 100%);
   pointer-events: none;
   z-index: 5;
 }
 
 .sequenceCanvasWrapper:hover {
-  clip-path: inset(0 round 15px 150px 15px 150px);
+  /* No more clip-path changes */
 }
 
 .sequenceContentWrapper {
@@ -738,7 +728,7 @@
 .endLogo {
   height: 120px;
   margin-bottom: 40px;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
 }
 
 .endContent h2 {
@@ -771,9 +761,20 @@
   transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
-.large { grid-column: span 2; grid-row: span 2; }
-.small { grid-column: span 1; grid-row: span 1; }
-.wide { grid-column: span 2; grid-row: span 1; }
+.large {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.small {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.wide {
+  grid-column: span 2;
+  grid-row: span 1;
+}
 
 .mediaItem:hover {
   transform: translateY(-5px);
@@ -839,7 +840,9 @@
     grid-auto-rows: auto;
   }
 
-  .large, .small, .wide {
+  .large,
+  .small,
+  .wide {
     grid-column: span 1;
     grid-row: span 1;
     aspect-ratio: 16/10;
@@ -931,39 +934,39 @@
     padding: 16px 32px;
     font-size: 0.85rem;
   }
-  
+
   .sequenceLayout {
     grid-template-columns: 1fr;
     height: auto;
   }
-  
+
   .sequenceCanvasWrapper {
     height: 50vh;
     width: 100%;
   }
-  
+
   .missionSection,
   .featuredSection,
   .processSection,
   .mediaShowcase {
     padding: 60px 0;
   }
-  
+
   .sequenceContentWrapper {
     height: auto;
     padding: 60px 30px;
   }
-  
+
   .sequenceTitle {
     font-size: 2.5rem;
   }
-  
+
   .sequencePara {
     font-size: 0.75rem;
     letter-spacing: 0.05em;
     line-height: 1.6;
   }
-  
+
   .horizontalShowcase {
     height: auto;
     overflow: visible;
@@ -976,30 +979,30 @@
     padding: 80px 20px;
     gap: 60px;
   }
-  
+
   .horizontalHeader {
     width: 100%;
     padding-right: 0;
     text-align: center;
     margin-bottom: 20px;
   }
-  
+
   .horizontalTitle {
     font-size: 2.2rem;
   }
-  
+
   .horizontalSubtitle {
     font-size: 0.7rem;
     letter-spacing: 0.2em;
   }
-  
+
   .horizontalItem {
     width: 100%;
     height: 60vh;
     margin-right: 0;
     border-radius: 20px;
   }
-  
+
   .sectionHeader {
     margin-bottom: 40px;
   }
