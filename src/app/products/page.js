@@ -72,8 +72,21 @@ export default function ProductsPage() {
               >
                 <Link href={`/product/${product.id}`} className={styles.imageLink}>
                   <div className={styles.imageWrapper}>
-                    <img src={product.image} alt={product.name} className={styles.productImage} />
+                    <img 
+                      src={product.image} 
+                      alt={product.name} 
+                      className={styles.productImage} 
+                      onError={(e) => {
+                        // Fallback to raw spice image if packed image is missing
+                        if (product.image.includes('-packed')) {
+                          e.target.src = product.image.replace('-packed', '');
+                        }
+                      }}
+                    />
                     <div className={styles.categoryBadge}>{product.category}</div>
+                    <div className={styles.packagingBadge}>
+                      <Sparkles size={10} /> PREMIUM PACK
+                    </div>
                     <div className={styles.overlay}>
                       <span>VIEW DETAILS</span>
                     </div>

@@ -22,15 +22,27 @@ export default function ProductDetail() {
   ];
 
   const [selectedWeight, setSelectedWeight] = useState(weightOptions[3]); // Default 1kg
+  const [activeImage, setActiveImage] = useState(product?.image);
 
+  // Initial entrance animation
   useEffect(() => {
     if (!product) return;
     
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.fromTo(`.${styles.productImageSection}`, { opacity: 0, x: -50 }, { opacity: 1, x: 0, duration: 1.5 })
-      .fromTo(`.${styles.productContentSection}`, { opacity: 0, x: 50 }, { opacity: 1, x: 0, duration: 1.5 }, '-=1.2')
-      .fromTo(`.${styles.backBtn}`, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 1 }, '-=1');
+    tl.fromTo(`.${styles.productImageSection}`, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2 })
+      .fromTo(`.${styles.productContentSection}`, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 1.2 }, '-=1')
+      .fromTo(`.${styles.backBtn}`, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.8');
   }, [product]);
+
+  // Handle only image switch animation
+  useEffect(() => {
+    if (!activeImage) return;
+    
+    gsap.fromTo(`.${styles.detailImage}`, 
+      { opacity: 0, scale: 1.05 }, 
+      { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }
+    );
+  }, [activeImage]);
 
   if (!product) {
     return (
@@ -53,12 +65,41 @@ export default function ProductDetail() {
       </Link>
 
       <div className={styles.productDetailGrid}>
-        {/* Left: Image */}
+        {/* Left: Image Gallery */}
         <div className={styles.productImageSection}>
-          <div className={styles.imageContainer}>
-            <img src={product.image} alt={product.name} className={styles.detailImage} />
+          <div className={styles.mainImageContainer}>
+            <img 
+              src={activeImage || product.image} 
+              alt={product.name} 
+              className={styles.detailImage} 
+              key={activeImage} // Key for animation
+            />
             <div className={styles.imageOverlay}></div>
           </div>
+          
+          {product.gallery && product.gallery.length > 0 && (
+            <div className={styles.thumbnailGallery}>
+              {/* Combine main image and gallery, but remove duplicates */}
+              {[product.image, ...product.gallery]
+                .filter((img, idx, self) => self.indexOf(img) === idx)
+                .map((img, idx) => (
+                <div 
+                  key={idx}
+                  className={`${styles.thumbnailWrapper} ${activeImage === img || (!activeImage && idx === 0) ? styles.activeThumb : ''}`}
+                  onClick={() => setActiveImage(img)}
+                >
+                  <img 
+                    src={img} 
+                    alt={`${product.name} ${idx}`} 
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.style.display = 'none';
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Right: Content */}
