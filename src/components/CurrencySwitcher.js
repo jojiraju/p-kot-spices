@@ -11,11 +11,13 @@ export default function CurrencySwitcher() {
   const handleSwitch = (type) => {
     if (type === currency) return;
     
-    // Switcher pop animation
-    gsap.fromTo(containerRef.current, 
-      { scale: 0.95 }, 
-      { scale: 1, duration: 0.4, ease: 'elastic.out(1.2, 0.5)' }
-    );
+    // Switcher pop animation - safety check added
+    if (containerRef.current) {
+      gsap.fromTo(containerRef.current, 
+        { scale: 0.95 }, 
+        { scale: 1, duration: 0.4, ease: 'elastic.out(1.2, 0.5)' }
+      );
+    }
     
     toggleCurrency(type);
   };

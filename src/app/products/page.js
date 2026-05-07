@@ -34,10 +34,13 @@ export default function ProductsPage() {
 
   useEffect(() => {
     // Animate grid items when category changes
-    gsap.fromTo(cardsRef.current, 
-      { opacity: 0, scale: 0.9, y: 30 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', overwrite: true }
-    );
+    const validCards = cardsRef.current.filter(el => el !== null);
+    if (validCards.length > 0) {
+      gsap.fromTo(validCards, 
+        { opacity: 0, scale: 0.9, y: 30 },
+        { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out', overwrite: true }
+      );
+    }
   }, [activeCategory, filteredProducts]);
 
   return (

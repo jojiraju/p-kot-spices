@@ -12,7 +12,9 @@ export default function Hero({
   titleRef, 
   subtitleRef, 
   ctaRef, 
-  scrollIndRef 
+  scrollIndRef,
+  heroCenterImgRef,
+  parallaxLayersRef
 }) {
   const { currency } = useCurrency();
   const [isFlash, setIsFlash] = useState(false);
@@ -29,20 +31,20 @@ export default function Hero({
   return (
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.heroScene}>
-        <div className={`${styles.parallaxLayer} ${styles.layer1}`}>
+        <div className={`${styles.parallaxLayer} ${styles.layer1}`} ref={el => parallaxLayersRef.current[0] = el}>
           <img src="/products/black-pepper.png" alt="Black Pepper" />
         </div>
-        <div className={`${styles.parallaxLayer} ${styles.layer2}`}>
+        <div className={`${styles.parallaxLayer} ${styles.layer2}`} ref={el => parallaxLayersRef.current[1] = el}>
           <img src="/products/cardamom.png" alt="Green Cardamom" />
         </div>
-        <div className={`${styles.parallaxLayer} ${styles.layer3}`}>
+        <div className={`${styles.parallaxLayer} ${styles.layer3}`} ref={el => parallaxLayersRef.current[2] = el}>
           <img src="/products/star-anise.png" alt="Star Anise" />
         </div>
-        <div className={`${styles.parallaxLayer} ${styles.layer4}`}>
+        <div className={`${styles.parallaxLayer} ${styles.layer4}`} ref={el => parallaxLayersRef.current[3] = el}>
           <img src="/products/cinnamon.png" alt="Cinnamon" />
         </div>
         
-        <div className={styles.heroCenterImg}>
+        <div className={styles.heroCenterImg} ref={heroCenterImgRef}>
           <img src="/products/cumin-packed.png" alt="P-KOT Cumin Pouch" />
           <div className={styles.centerGlow}></div>
         </div>

@@ -31,6 +31,9 @@ export default function Home() {
   const ctaRef = useRef(null);
   const scrollIndRef = useRef(null);
 
+  const heroCenterImgRef = useRef(null);
+  const parallaxLayersRef = useRef([]);
+
   const sequenceSectionRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -64,19 +67,23 @@ export default function Home() {
       const xPos = (clientX / window.innerWidth - 0.5) * 40;
       const yPos = (clientY / window.innerHeight - 0.5) * 40;
 
-      gsap.to(`.${styles.parallaxLayer}`, {
-        x: (i) => xPos * (i + 1) * 0.2,
-        y: (i) => yPos * (i + 1) * 0.2,
-        duration: 1,
-        ease: 'power2.out',
-      });
+      if (parallaxLayersRef.current.length > 0) {
+        gsap.to(parallaxLayersRef.current, {
+          x: (i) => xPos * (i + 1) * 0.2,
+          y: (i) => yPos * (i + 1) * 0.2,
+          duration: 1,
+          ease: 'power2.out',
+        });
+      }
 
-      gsap.to(`.${styles.heroCenterImg}`, {
-        x: -xPos * 0.3,
-        y: -yPos * 0.3,
-        duration: 1.2,
-        ease: 'power3.out',
-      });
+      if (heroCenterImgRef.current) {
+        gsap.to(heroCenterImgRef.current, {
+          x: -xPos * 0.3,
+          y: -yPos * 0.3,
+          duration: 1.2,
+          ease: 'power3.out',
+        });
+      }
     };
 
     window.addEventListener('mousemove', handleHeroParallax);
@@ -85,28 +92,31 @@ export default function Home() {
     const tlLoad = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     gsap.set([titleRef.current, subtitleRef.current, ctaRef.current, scrollIndRef.current], { opacity: 0, y: 30 });
-    gsap.set(`.${styles.parallaxLayer}`, { opacity: 0, scale: 1.1 });
+    if (parallaxLayersRef.current.length > 0) {
+      gsap.set(parallaxLayersRef.current, { opacity: 0, scale: 1.1 });
+    }
 
     tlLoad
-      .to(`.${styles.heroCenterImg}`, { opacity: 1, scale: 1, duration: 2, ease: 'expo.out' })
-      .to(`.${styles.parallaxLayer}`, { opacity: 1, scale: 1, duration: 1.5, stagger: 0.1 }, '-=1.5')
+      .to(heroCenterImgRef.current, { opacity: 1, scale: 1, duration: 2, ease: 'expo.out' })
+      .to(parallaxLayersRef.current, { opacity: 1, scale: 1, duration: 1.5, stagger: 0.1 }, '-=1.5')
       .to(titleRef.current, { opacity: 1, y: 0, duration: 1.2 }, '-=1')
       .to(subtitleRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.8')
       .to(ctaRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.8')
       .to(scrollIndRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.5');
 
     // ── Cinematic Floating Animation ──────────────────────────────────────────
-    const floatLayers = gsap.utils.toArray(`.${styles.parallaxLayer}`);
-    floatLayers.forEach((layer, i) => {
-      gsap.to(layer, {
-        y: '+=20',
-        x: i % 2 === 0 ? '+=10' : '-=10',
-        rotation: i % 2 === 0 ? '+=2' : '-=2',
-        duration: 3 + i,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut'
-      });
+    parallaxLayersRef.current.forEach((layer, i) => {
+      if (layer) {
+        gsap.to(layer, {
+          y: '+=20',
+          x: i % 2 === 0 ? '+=10' : '-=10',
+          rotation: i % 2 === 0 ? '+=2' : '-=2',
+          duration: 3 + i,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut'
+        });
+      }
     });
 
     // ── Hero Scroll Gathering Animation ─────────────────────────────────────────
@@ -119,11 +129,11 @@ export default function Home() {
       }
     });
 
-    heroTl.to(`.${styles.layer1}`, { x: '80%', y: '80%', rotate: 15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(`.${styles.layer2}`, { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(`.${styles.layer3}`, { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(`.${styles.layer4}`, { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(`.${styles.heroCenterImg}`, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
+    heroTl.to(parallaxLayersRef.current[0], { x: '80%', y: '80%', rotate: 15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(parallaxLayersRef.current[1], { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(parallaxLayersRef.current[2], { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(parallaxLayersRef.current[3], { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(heroCenterImgRef.current, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
       .to(titleRef.current, { y: -50, opacity: 0, ease: 'power2.in' }, 0);
 
     let resizeHandler = null;
@@ -257,6 +267,8 @@ export default function Home() {
         subtitleRef={subtitleRef}
         ctaRef={ctaRef}
         scrollIndRef={scrollIndRef}
+        heroCenterImgRef={heroCenterImgRef}
+        parallaxLayersRef={parallaxLayersRef}
       />
 
       <SequenceSection
