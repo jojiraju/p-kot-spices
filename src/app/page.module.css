@@ -997,10 +997,10 @@
 
   .heroCenterImg {
     position: absolute;
-    top: 70%;
+    top: 68%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 75vw;
+    width: 70vw;
     z-index: 10;
     opacity: 1;
     background: #15100E;
