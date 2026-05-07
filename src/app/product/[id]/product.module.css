@@ -275,4 +275,30 @@
   .productTitle {
     font-size: 3rem;
   }
+  .imageContainer {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .productTitle {
+    font-size: 2.2rem;
+  }
+  .priceTag {
+    font-size: 2.2rem;
+  }
+  .weightPicker {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .weightBtn {
+    flex: 1 1 30%;
+    padding: 10px 15px;
+    font-size: 0.75rem;
+  }
+  .productDetailMain {
+    padding-top: 80px;
+  }
 }

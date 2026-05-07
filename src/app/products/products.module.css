@@ -305,3 +305,19 @@
     font-size: 3rem;
   }
 }
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2.2rem;
+  }
+  .collectionHero {
+    padding-top: 120px;
+  }
+  .filterBar {
+    gap: 8px;
+  }
+  .filterBtn {
+    padding: 8px 15px;
+    font-size: 0.75rem;
+  }
+}

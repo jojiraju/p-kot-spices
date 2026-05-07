@@ -16,16 +16,16 @@ export default function Hero({
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.heroScene}>
         <div className={`${styles.parallaxLayer} ${styles.layer1}`}>
-          <img src="https://images.unsplash.com/photo-1532336414038-cf19250c5757?q=80&w=800" alt="Black Pepper" />
+          <img src="/products/black-pepper.png" alt="Black Pepper" />
         </div>
         <div className={`${styles.parallaxLayer} ${styles.layer2}`}>
-          <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=800" alt="Chili Powder" />
+          <img src="/products/cardamom.png" alt="Green Cardamom" />
         </div>
         <div className={`${styles.parallaxLayer} ${styles.layer3}`}>
-          <img src="https://images.unsplash.com/photo-1615484477778-ca3b77940c25?q=80&w=800" alt="Cinnamon and Star Anise" />
+          <img src="/products/star-anise.png" alt="Star Anise" />
         </div>
         <div className={`${styles.parallaxLayer} ${styles.layer4}`}>
-          <img src="https://images.unsplash.com/photo-1509358271058-acd22cc93898?q=80&w=800" alt="Turmeric" />
+          <img src="/products/cinnamon.png" alt="Cinnamon" />
         </div>
         
         <div className={styles.heroCenterImg}>

@@ -1,4 +1,5 @@
 import './globals.css';
+import ScrollToTop from '@/components/common/ScrollToTop';
 
 export const metadata = {
   title: 'P-Kot Spices | Premium Quality Authentic Flavors',
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <ScrollToTop />
+      </body>
     </html>
   );
 }

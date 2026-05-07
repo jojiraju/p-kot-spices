@@ -126,27 +126,14 @@ export default function Home() {
           .to(`.${styles.heroCenterImg}`, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
           .to(titleRef.current, { y: -50, opacity: 0, ease: 'power2.in' }, 0);
 
+    let resizeHandler = null;
+
     // ── Sequence Canvas Implementation ──────────────────────────────────────────
     const canvas = canvasRef.current;
     if (canvas) {
       const context = canvas.getContext('2d');
-      const updateCanvasSize = () => {
-        const wrapper = canvas.parentElement;
-        if (wrapper) {
-          canvas.width = wrapper.offsetWidth;
-          canvas.height = wrapper.offsetHeight;
-          if (images[airplay.frame]) render();
-        }
-      };
-      
       const images = [];
       const airplay = { frame: 0, scale: 1 };
-
-      for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.src = currentFrame(i);
-        images.push(img);
-      }
 
       const render = () => {
         const frameIndex = airplay.frame;
@@ -178,12 +165,29 @@ export default function Home() {
         }
       };
 
+      const updateCanvasSize = () => {
+        const wrapper = canvas.parentElement;
+        if (wrapper) {
+          canvas.width = wrapper.offsetWidth;
+          canvas.height = wrapper.offsetHeight;
+          if (images[airplay.frame]) render();
+        }
+      };
+      
+      resizeHandler = updateCanvasSize;
+
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        images.push(img);
+      }
+
       images[0].onload = () => {
         updateCanvasSize();
         render();
       };
       
-      window.addEventListener('resize', updateCanvasSize);
+      window.addEventListener('resize', resizeHandler);
 
       const tlSequence = gsap.timeline({
         scrollTrigger: {
@@ -230,7 +234,9 @@ export default function Home() {
     return () => {
       lenis.destroy();
       window.removeEventListener('mousemove', handleHeroParallax);
-      window.removeEventListener('resize', updateCanvasSize);
+      if (resizeHandler) {
+        window.removeEventListener('resize', resizeHandler);
+      }
     };
   }, []);
 

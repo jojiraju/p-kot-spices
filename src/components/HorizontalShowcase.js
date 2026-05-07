@@ -44,7 +44,9 @@ export default function HorizontalShowcase() {
   const scrollRef = useRef(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 1024px)", () => {
       const updateScroll = () => {
         if (!scrollRef.current) return;
         const scrollWidth = scrollRef.current.offsetWidth;
@@ -90,9 +92,13 @@ export default function HorizontalShowcase() {
       // Initial call after a brief delay to ensure content is measured
       setTimeout(updateScroll, 100);
       window.addEventListener('resize', updateScroll);
-    }, containerRef);
 
-    return () => ctx.revert();
+      return () => {
+        window.removeEventListener('resize', updateScroll);
+      };
+    });
+
+    return () => mm.revert();
   }, []);
 
   return (

@@ -376,3 +376,79 @@
     text-align: center;
   }
 }
+/* Scroll To Top */
+.scrollTopContainer {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.scrollTopBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(15, 10, 8, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s ease;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+.scrollTopBtn:hover {
+  background: rgba(249, 168, 37, 0.15);
+  border-color: var(--color-primary);
+  transform: translateY(-5px);
+  box-shadow: 0 25px 45px rgba(249, 168, 37, 0.2);
+}
+
+.scrollProgress {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  transform: rotate(-90deg);
+}
+
+.progressCircle {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 2px;
+  stroke-dasharray: 188.5; /* 2 * PI * 30 */
+  stroke-dashoffset: 188.5;
+}
+
+.arrowIcon {
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+.scrollTopBtn:hover .arrowIcon {
+  transform: translateY(-3px);
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .scrollTopContainer {
+    bottom: 30px;
+    right: 20px;
+  }
+  
+  .scrollTopBtn {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .scrollProgress {
+    width: 54px;
+    height: 54px;
+  }
+}
