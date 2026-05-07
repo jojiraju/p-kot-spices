@@ -3,12 +3,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { products } from '@/data/products';
 import Link from 'next/link';
-import { ChevronLeft, MessageCircle, ChevronRight, Sparkles, Filter } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Sparkles, Filter } from 'lucide-react';
+import { HiShoppingBag } from 'react-icons/hi2';
 import styles from './products.module.css';
 import gsap from 'gsap';
+import { useCurrency } from '@/context/CurrencyContext';
+import Header from '@/components/common/Header';
+import MenuOverlay from '@/components/common/MenuOverlay';
 
 export default function ProductsPage() {
+  const { currency } = useCurrency();
   const [activeCategory, setActiveCategory] = useState('All');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [headerActive, setHeaderActive] = useState(false);
   const gridRef = useRef(null);
   const cardsRef = useRef([]);
 
@@ -16,6 +23,14 @@ export default function ProductsPage() {
   const filteredProducts = activeCategory === 'All' 
     ? products 
     : products.filter(p => p.category === activeCategory);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHeaderActive(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     // Animate grid items when category changes
@@ -27,18 +42,12 @@ export default function ProductsPage() {
 
   return (
     <main className={styles.productsMain}>
-      <header className={styles.header}>
-        <div className={styles.headerLogo}>
-          <Link href="/">
-            <img src="/logo.png" alt="P-KOT Spices" className={styles.logoImage} />
-          </Link>
-        </div>
-        <div className={styles.navActions}>
-          <Link href="/" className={styles.backHomeBtn}>
-            <ChevronLeft size={18} /> BACK
-          </Link>
-        </div>
-      </header>
+      <MenuOverlay menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header 
+        headerActive={headerActive} 
+        menuOpen={menuOpen} 
+        setMenuOpen={setMenuOpen} 
+      />
 
       <section className={styles.collectionHero}>
         <div className="container">
@@ -96,18 +105,20 @@ export default function ProductsPage() {
                 <div className={styles.cardContent}>
                   <div className={styles.cardHeader}>
                     <h3 className={styles.productName}>{product.name}</h3>
-                    <div className={styles.price}>₹{product.price}</div>
+                    <div className={styles.price}>
+                      {currency === 'INR' ? `₹${product.priceINR}` : `$${product.priceUSD}`}
+                    </div>
                   </div>
                   <p className={styles.productDesc}>{product.description}</p>
                   
                   <div className={styles.cardActions}>
                     <a 
-                      href={`https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name} (₹${product.price}). Please provide more details.`)}`}
+                      href={`https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name} (${currency === 'INR' ? '₹' + product.priceINR : '$' + product.priceUSD}). Please provide more details.`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className={styles.buyBtn}
                     >
-                      <MessageCircle size={18} /> BUY NOW
+                      <HiShoppingBag size={18} /> BUY NOW
                     </a>
                     <Link href={`/product/${product.id}`} className={styles.detailsBtn}>
                       DETAILS <ChevronRight size={16} />

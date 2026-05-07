@@ -1,8 +1,10 @@
 'use client';
+import { useState, useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import AnimatedTitle from './AnimatedTitle';
 import styles from '../app/page.module.css';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function Hero({ 
   heroRef, 
@@ -12,6 +14,18 @@ export default function Hero({
   ctaRef, 
   scrollIndRef 
 }) {
+  const { currency } = useCurrency();
+  const [isFlash, setIsFlash] = useState(false);
+
+  useEffect(() => {
+    setIsFlash(true);
+    const timer = setTimeout(() => setIsFlash(false), 600);
+    return () => clearTimeout(timer);
+  }, [currency]);
+
+  const subtitle = currency === 'INR' 
+    ? 'PREMIUM SPICES FOR THE AUTHENTIC INDIAN KITCHEN'
+    : 'EXQUISITE SPICES DELIVERED GLOBALLY FROM THE HEART OF INDIA';
   return (
     <section className={styles.hero} ref={heroRef}>
       <div className={styles.heroScene}>
@@ -29,7 +43,7 @@ export default function Hero({
         </div>
         
         <div className={styles.heroCenterImg}>
-          <img src="/sequence/packet_00.jpg" alt="P-KOT Pouch" />
+          <img src="/products/cumin-packed.png" alt="P-KOT Cumin Pouch" />
           <div className={styles.centerGlow}></div>
         </div>
       </div>
@@ -38,12 +52,12 @@ export default function Hero({
       <div className={styles.heroBottomGradient}></div>
       <div className={styles.grain}></div>
 
-      <div className={styles.heroContent} ref={heroContentRef}>
+      <div className={`${styles.heroContent} ${isFlash ? 'currencyFlash' : ''}`} ref={heroContentRef}>
         <div ref={titleRef}>
           <AnimatedTitle />
         </div>
         <p className={styles.heroSubtitle} ref={subtitleRef}>
-          PREMIUM QUALITY • AUTHENTIC FLAVORS
+          {subtitle}
         </p>
         <div className={styles.ctaWrapper} ref={ctaRef}>
           <Link href="/products" className={styles.heroCta}>

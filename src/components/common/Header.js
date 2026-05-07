@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import styles from './Common.module.css';
+import CurrencySwitcher from '../CurrencySwitcher';
 
 export default function Header({ headerActive, menuOpen, setMenuOpen }) {
   return (
@@ -17,6 +18,8 @@ export default function Header({ headerActive, menuOpen, setMenuOpen }) {
         <a href="#mission" className={styles.navLink}>HERITAGE</a>
         <Link href="/contact" className={styles.navLink}>CONTACT</Link>
       </nav>
+
+      <CurrencySwitcher />
 
       <button className={styles.menuBtn} onClick={() => setMenuOpen(!menuOpen)}>
         <span className={styles.menuLine}></span>

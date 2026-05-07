@@ -39,7 +39,7 @@ export default function Home() {
 
   // ── Image Sequence Logic ──────────────────────────────────────────────
   const frameCount = 4;
-  const currentFrame = (index) => `/sequence/packet_${index.toString().padStart(2, '0')}.jpg`;
+  const currentFrame = (index) => `/sequence/packet_${index.toString().padStart(2, '0')}.png`;
 
   useEffect(() => {
     // Scroll progress / Smooth scroll
@@ -70,7 +70,7 @@ export default function Home() {
         duration: 1,
         ease: 'power2.out',
       });
-      
+
       gsap.to(`.${styles.heroCenterImg}`, {
         x: -xPos * 0.3,
         y: -yPos * 0.3,
@@ -83,7 +83,7 @@ export default function Home() {
 
     // ── Initial Load Animations ─────────────────────────────────────────────────
     const tlLoad = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    
+
     gsap.set([titleRef.current, subtitleRef.current, ctaRef.current, scrollIndRef.current], { opacity: 0, y: 30 });
     gsap.set(`.${styles.parallaxLayer}`, { opacity: 0, scale: 1.1 });
 
@@ -120,11 +120,11 @@ export default function Home() {
     });
 
     heroTl.to(`.${styles.layer1}`, { x: '80%', y: '80%', rotate: 15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-          .to(`.${styles.layer2}`, { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-          .to(`.${styles.layer3}`, { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-          .to(`.${styles.layer4}`, { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-          .to(`.${styles.heroCenterImg}`, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
-          .to(titleRef.current, { y: -50, opacity: 0, ease: 'power2.in' }, 0);
+      .to(`.${styles.layer2}`, { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(`.${styles.layer3}`, { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(`.${styles.layer4}`, { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
+      .to(`.${styles.heroCenterImg}`, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
+      .to(titleRef.current, { y: -50, opacity: 0, ease: 'power2.in' }, 0);
 
     let resizeHandler = null;
 
@@ -173,7 +173,7 @@ export default function Home() {
           if (images[airplay.frame]) render();
         }
       };
-      
+
       resizeHandler = updateCanvasSize;
 
       for (let i = 0; i < frameCount; i++) {
@@ -186,7 +186,7 @@ export default function Home() {
         updateCanvasSize();
         render();
       };
-      
+
       window.addEventListener('resize', resizeHandler);
 
       const tlSequence = gsap.timeline({
@@ -206,28 +206,28 @@ export default function Home() {
         onUpdate: render,
         duration: 1
       })
-      .to(airplay, {
-        scale: 1.1,
-        ease: 'power1.inOut',
-        onUpdate: render,
-        duration: 1
-      }, 0);
+        .to(airplay, {
+          scale: 1.1,
+          ease: 'power1.inOut',
+          onUpdate: render,
+          duration: 1
+        }, 0);
 
       const sequenceTexts = gsap.utils.toArray(`.${styles.sequenceTextItem}`);
       sequenceTexts.forEach((text, i) => {
         // Calculate relative position in the timeline
         const step = 1 / sequenceTexts.length;
         const startPos = i * step;
-        
+
         tlSequence.fromTo(text,
           { opacity: 0, y: 50, filter: 'blur(10px)' },
           { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5, ease: 'power2.out' },
           startPos
         )
-        .to(text, 
-          { opacity: 0, y: -50, filter: 'blur(10px)', duration: 0.5, ease: 'power2.in' },
-          startPos + step - 0.2
-        );
+          .to(text,
+            { opacity: 0, y: -50, filter: 'blur(10px)', duration: 0.5, ease: 'power2.in' },
+            startPos + step - 0.2
+          );
       });
     }
 
@@ -243,14 +243,14 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <MenuOverlay menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
-      
-      <Header 
-        headerActive={headerActive} 
-        menuOpen={menuOpen} 
-        setMenuOpen={setMenuOpen} 
+
+      <Header
+        headerActive={headerActive}
+        menuOpen={menuOpen}
+        setMenuOpen={setMenuOpen}
       />
 
-      <Hero 
+      <Hero
         heroRef={heroRef}
         heroContentRef={heroContentRef}
         titleRef={titleRef}
@@ -259,9 +259,9 @@ export default function Home() {
         scrollIndRef={scrollIndRef}
       />
 
-      <SequenceSection 
-        sequenceSectionRef={sequenceSectionRef} 
-        canvasRef={canvasRef} 
+      <SequenceSection
+        sequenceSectionRef={sequenceSectionRef}
+        canvasRef={canvasRef}
       />
 
       <MissionSection />

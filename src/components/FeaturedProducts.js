@@ -3,8 +3,10 @@ import { products } from '@/data/products';
 import Link from 'next/link';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import styles from '../app/page.module.css';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function FeaturedProducts() {
+  const { currency } = useCurrency();
   const featured = products.slice(0, 4);
 
   return (
@@ -27,7 +29,9 @@ export default function FeaturedProducts() {
               <div className={styles.productInfo}>
                 <span className={styles.productCategory}>{product.category}</span>
                 <h3 className={styles.productName}>{product.name}</h3>
-                <p className={styles.productPrice}>₹{product.price} / {product.unit}</p>
+                <p className={styles.productPrice}>
+                  {currency === 'INR' ? `₹${product.priceINR}` : `$${product.priceUSD}`} / {product.unit}
+                </p>
               </div>
             </Link>
           ))}

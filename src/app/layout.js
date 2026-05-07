@@ -1,5 +1,6 @@
 import './globals.css';
 import ScrollToTop from '@/components/common/ScrollToTop';
+import { CurrencyProvider } from '@/context/CurrencyContext';
 
 export const metadata = {
   title: 'P-Kot Spices | Premium Quality Authentic Flavors',
@@ -10,8 +11,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        {children}
-        <ScrollToTop />
+        <CurrencyProvider>
+          {children}
+          <ScrollToTop />
+        </CurrencyProvider>
       </body>
     </html>
   );

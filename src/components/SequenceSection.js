@@ -13,7 +13,7 @@ export default function SequenceSection({ sequenceSectionRef, canvasRef }) {
         <div className={styles.sequenceContentWrapper}>
           <div className={styles.sequenceTextItem}>
             <h2 className={styles.sequenceTitle}>The Awakening.</h2>
-            <p className={styles.sequencePara}>Pure heritage, unsealed for the first time. Experience the intense, intoxicating aroma of sun-dried cardamom, hand-picked from the mist-covered high ranges of Idukki. Every seed tells a story of the fertile soil, the tropical rains, and the centuries of tradition that have perfected this timeless flavor.</p>
+            <p className={styles.sequencePara}>Pure heritage, unsealed for the first time. Experience the intense, earthy aroma of our premium cumin seeds, hand-selected for their rich flavor and high oil content. Every seed tells a story of the sun-drenched fields and the centuries of tradition that have perfected this timeless spice.</p>
           </div>
           
           <div className={styles.sequenceTextItem}>

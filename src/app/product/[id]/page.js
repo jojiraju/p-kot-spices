@@ -3,15 +3,30 @@
 import { useParams } from 'next/navigation';
 import { products } from '@/data/products';
 import Link from 'next/link';
-import { ChevronLeft, MessageCircle, Scale, Package } from 'lucide-react';
+import { ChevronLeft, Scale, Package } from 'lucide-react';
+import { HiShoppingBag } from 'react-icons/hi2';
 import styles from './product.module.css';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { useCurrency } from '@/context/CurrencyContext';
+import Header from '@/components/common/Header';
+import MenuOverlay from '@/components/common/MenuOverlay';
 
 export default function ProductDetail() {
+  const { currency } = useCurrency();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [headerActive, setHeaderActive] = useState(false);
   const params = useParams();
   const product = products.find((p) => p.id === params.id);
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setHeaderActive(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const weightOptions = [
     { label: '100g', value: 0.1 },
@@ -53,16 +68,21 @@ export default function ProductDetail() {
     );
   }
 
-  const calculatedPrice = Math.round(parseFloat(product.price.replace(/,/g, '')) * selectedWeight.value);
-  const formattedPrice = new Intl.NumberFormat('en-IN').format(calculatedPrice);
+  const basePrice = currency === 'INR' ? product.priceINR : product.priceUSD;
+  const calculatedPrice = (parseFloat(basePrice.replace(/,/g, '')) * selectedWeight.value).toFixed(currency === 'INR' ? 0 : 2);
+  const formattedPrice = new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US').format(calculatedPrice);
 
-  const whatsappLink = `https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ₹${formattedPrice} \nPlease provide payment details.`)}`;
+  const symbol = currency === 'INR' ? '₹' : '$';
+  const whatsappLink = `https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ${symbol}${formattedPrice} \nPlease provide payment details.`)}`;
 
   return (
     <main className={styles.productDetailMain} ref={containerRef}>
-      <Link href="/products" className={styles.backBtn}>
-        <ChevronLeft size={20} /> BACK TO COLLECTION
-      </Link>
+      <MenuOverlay menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
+      <Header 
+        headerActive={headerActive} 
+        menuOpen={menuOpen} 
+        setMenuOpen={setMenuOpen} 
+      />
 
       <div className={styles.productDetailGrid}>
         {/* Left: Image Gallery */}
@@ -108,7 +128,7 @@ export default function ProductDetail() {
             <span className={styles.productId}>PRODUCT 0{products.indexOf(product) + 1}</span>
             <h1 className={styles.productTitle}>{product.name}</h1>
             <div className={styles.priceTag}>
-              ₹{formattedPrice} <span className={styles.unitText}>/ {selectedWeight.label}</span>
+              {currency === 'INR' ? '₹' : '$'}{formattedPrice} <span className={styles.unitText}>/ {selectedWeight.label}</span>
             </div>
           </div>
 
@@ -139,7 +159,7 @@ export default function ProductDetail() {
 
           <div className={styles.ctaSection}>
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.whatsappBtn}>
-              <MessageCircle size={20} /> BUY NOW
+              <HiShoppingBag size={20} /> BUY NOW
             </a>
             <p className={styles.ctaNote}>* Prices are calculated based on your selected weight.</p>
           </div>
