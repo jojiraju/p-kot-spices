@@ -13,7 +13,6 @@ import { useGSAP } from '@gsap/react';
 import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
-import BuyNowModal from '@/components/common/BuyNowModal';
 import { Minus, Plus } from 'lucide-react';
 
 
@@ -27,7 +26,6 @@ export default function ProductDetail() {
   const imageSectionRef = useRef(null);
   const contentSectionRef = useRef(null);
   const [quantity, setQuantity] = useState(1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
 
@@ -197,27 +195,18 @@ export default function ProductDetail() {
           </div>
 
           <div className={styles.ctaSection}>
-            <button 
+            <Link 
+              href={`/checkout/${product.id}?w=${selectedWeight.label}&q=${quantity}`}
               className={styles.whatsappBtn}
-              onClick={() => setIsModalOpen(true)}
             >
               <HiShoppingBag size={20} /> BUY NOW — {symbol}{formattedTotalPrice}
-            </button>
+            </Link>
             <p className={styles.ctaNote}>* Prices are calculated based on your selected weight and quantity.</p>
           </div>
 
         </div>
       </div>
 
-      <BuyNowModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        product={product}
-        selectedWeight={selectedWeight}
-        quantity={quantity}
-        totalPrice={formattedTotalPrice}
-        currencySymbol={symbol}
-      />
     </main>
 
   );

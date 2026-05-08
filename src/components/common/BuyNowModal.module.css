@@ -5,11 +5,10 @@
   backdrop-filter: blur(20px);
   z-index: 1000;
   display: flex;
-  align-items: center;
+  align-items: center; /* This will center if content is small */
   justify-content: center;
-  padding: 20px;
-  overflow-y: auto; 
-  overflow-x: hidden !important; /* Force hide horizontal scroll */
+  padding: 40px 20px;
+  overflow-y: auto; /* Overlay handles the scroll */
 }
 
 .modalContent {
@@ -20,34 +19,31 @@
   max-width: 900px;
   border-radius: 40px;
   position: relative;
-  padding: 30px 45px; /* Even tighter vertical padding */
+  padding: 30px 45px; 
   box-shadow: 0 100px 150px rgba(0, 0, 0, 0.7), 
               inset 0 0 40px rgba(255, 255, 255, 0.02);
-  overflow-y: auto;
-  overflow-x: hidden;
-  margin: auto; 
+  overflow: hidden; /* Clip the glow and anything else */
+  margin: auto; /* Helps with centering when taller than viewport */
 }
 
-
-
-/* Custom scrollbar for the modal content */
-.modalContent::-webkit-scrollbar {
-  width: 6px;
+/* Custom scrollbar for the modal overlay */
+.modalOverlay::-webkit-scrollbar {
+  width: 8px;
 }
 
-.modalContent::-webkit-scrollbar-thumb {
-  background: rgba(249, 168, 37, 0.2);
+.modalOverlay::-webkit-scrollbar-thumb {
+  background: rgba(249, 168, 37, 0.3);
   border-radius: 10px;
 }
 
 .modalContent::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(249, 168, 37, 0.05) 0%, transparent 70%);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(249, 168, 37, 0.05) 0%, transparent 70%);
   pointer-events: none;
   z-index: -1;
 }

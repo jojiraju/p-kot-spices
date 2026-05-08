@@ -1,0 +1,141 @@
+.mvSection {
+  padding: 120px 0;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.mvSection::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(249, 168, 37, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mvGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.mvCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+  padding: 60px;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.mvCard:hover {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(249, 168, 37, 0.2);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+.iconBox {
+  width: 70px;
+  height: 70px;
+  background: rgba(249, 168, 37, 0.1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.mvTitle {
+  font-family: var(--font-serif);
+  font-size: 2.8rem;
+  color: #fff;
+}
+
+.mvTitle span {
+  color: var(--color-primary);
+  font-style: italic;
+}
+
+.mvPara {
+  color: #888;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.mvList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+
+.mvList li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.visionQuote {
+  margin-top: auto;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--color-primary);
+  opacity: 0.8;
+  border-left: 2px solid var(--color-primary);
+  padding-left: 20px;
+}
+
+@media (max-width: 900px) {
+  .mvSection {
+    padding: 80px 0;
+  }
+  .mvGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .mvCard {
+    padding: 40px;
+  }
+  .mvTitle {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mvSection {
+    padding: 60px 0;
+  }
+  .mvCard {
+    padding: 30px 20px;
+    border-radius: 30px;
+  }
+  .mvTitle {
+    font-size: 1.8rem;
+  }
+  .mvPara {
+    font-size: 1rem;
+  }
+  .iconBox {
+    width: 60px;
+    height: 60px;
+  }
+  .mvList {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

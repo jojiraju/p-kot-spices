@@ -10,9 +10,10 @@ export default function MenuOverlay({ menuOpen, setMenuOpen }) {
         <span className={styles.closeLine2}></span>
       </button>
       <nav className={styles.menuLinks}>
-        <a href="/" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Home</a>
-        <Link href="/products" className={styles.menuLink}>Collection</Link>
-        <a href="#mission" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Heritage</a>
+        <Link href="/" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link href="/products" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Collection</Link>
+        <Link href="/about" className={styles.menuLink} onClick={() => setMenuOpen(false)}>About Us</Link>
+        <Link href="/contact" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Contact</Link>
       </nav>
     </div>
   );

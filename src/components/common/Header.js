@@ -15,7 +15,7 @@ export default function Header({ headerActive, menuOpen, setMenuOpen }) {
       <nav className={styles.desktopNav}>
         <Link href="/" className={styles.navLink}>HOME</Link>
         <Link href="/products" className={styles.navLink}>COLLECTION</Link>
-        <a href="#mission" className={styles.navLink}>HERITAGE</a>
+        <Link href="/about" className={styles.navLink}>ABOUT</Link>
         <Link href="/contact" className={styles.navLink}>CONTACT</Link>
       </nav>
 

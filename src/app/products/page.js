@@ -115,14 +115,12 @@ export default function ProductsPage() {
                   <p className={styles.productDesc}>{product.description}</p>
                   
                   <div className={styles.cardActions}>
-                    <a 
-                      href={`https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name} (${currency === 'INR' ? '₹' + product.priceINR : '$' + product.priceUSD}). Please provide more details.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link 
+                      href={`/checkout/${product.id}?w=1kg&q=1`}
                       className={styles.buyBtn}
                     >
                       <HiShoppingBag size={18} /> BUY NOW
-                    </a>
+                    </Link>
                     <Link href={`/product/${product.id}`} className={styles.detailsBtn}>
                       DETAILS <ChevronRight size={16} />
                     </Link>
@@ -139,6 +137,7 @@ export default function ProductsPage() {
           <p>&copy; {new Date().getFullYear()} P-KOT Spices. Authenticity in every grain.</p>
         </div>
       </footer>
+
     </main>
   );
 }
