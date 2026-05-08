@@ -41,10 +41,10 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
     if (isOpen) {
       const originalBodyStyle = window.getComputedStyle(document.body).overflow;
       const originalHtmlStyle = window.getComputedStyle(document.documentElement).overflow;
-      
+
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
-      
+
       return () => {
         document.body.style.overflow = originalBodyStyle;
         document.documentElement.style.overflow = originalHtmlStyle;
@@ -64,7 +64,7 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     // For phone and pincode, allow only numbers
     if (name === 'phone' || name === 'pincode') {
       const numericValue = value.replace(/[^0-9]/g, '');
@@ -76,10 +76,10 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const separator = '----------------------------------';
 
-    const messageText = 
+    const messageText =
       `*P-KOT SPICES - NEW ORDER*\n` +
       `${separator}\n\n` +
       `*PRODUCT DETAILS*\n` +
@@ -130,7 +130,7 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
                 <p>{quantity} x {selectedWeight.label}</p>
               </div>
             </div>
-            
+
             <div className={styles.priceBreakdown}>
               <div className={styles.priceRow}>
                 <span>Subtotal</span>
@@ -154,11 +154,11 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
                 <label>Full Name</label>
                 <div className={styles.inputWrapper}>
                   <IoPersonOutline className={styles.fieldIcon} />
-                  <input 
-                    type="text" 
-                    name="name" 
-                    placeholder="Enter your name" 
-                    required 
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
                     spellCheck={false}
                     value={formData.name}
                     onChange={handleChange}
@@ -171,11 +171,11 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
                 <label>Phone Number</label>
                 <div className={styles.inputWrapper}>
                   <IoCallOutline className={styles.fieldIcon} />
-                  <input 
-                    type="tel" 
-                    name="phone" 
-                    placeholder="WhatsApp number" 
-                    required 
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone number"
+                    required
                     spellCheck={false}
                     value={formData.phone}
                     onChange={handleChange}
@@ -189,10 +189,10 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
               <label>Delivery Address</label>
               <div className={styles.inputWrapper}>
                 <IoLocationOutline className={styles.fieldIcon} />
-                <textarea 
-                  name="address" 
-                  placeholder="Street, locality, house number..." 
-                  required 
+                <textarea
+                  name="address"
+                  placeholder="Street, locality, house number..."
+                  required
                   value={formData.address}
                   onChange={handleChange}
                 ></textarea>
@@ -202,22 +202,22 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
             <div className={styles.inputRow}>
               <div className={styles.inputGroup}>
                 <label>City / State</label>
-                <input 
-                  type="text" 
-                  name="city" 
-                  placeholder={currency === 'INR' ? "e.g. Mumbai, MH" : "e.g. London, UK"} 
-                  required 
+                <input
+                  type="text"
+                  name="city"
+                  placeholder={currency === 'INR' ? "e.g. Mumbai, MH" : "e.g. London, UK"}
+                  required
                   value={formData.city}
                   onChange={handleChange}
                 />
               </div>
               <div className={styles.inputGroup}>
                 <label>{currency === 'INR' ? "Pincode" : "Postcode"}</label>
-                <input 
-                  type="text" 
-                  name="pincode" 
-                  placeholder={currency === 'INR' ? "000 000" : "SW1A 1AA"} 
-                  required 
+                <input
+                  type="text"
+                  name="pincode"
+                  placeholder={currency === 'INR' ? "000 000" : "SW1A 1AA"}
+                  required
                   value={formData.pincode}
                   onChange={handleChange}
                 />
