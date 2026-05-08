@@ -72,20 +72,22 @@ export default function HorizontalShowcase() {
         items.forEach((item) => {
           const media = item.querySelector(`.${styles.horizontalMediaWrapper} img, .${styles.horizontalMediaWrapper} video`);
           
-          gsap.fromTo(media, 
-            { x: '-15%' },
-            { 
-              x: '15%',
-              ease: 'none',
-              scrollTrigger: {
-                trigger: item,
-                containerAnimation: horizontalTween,
-                start: 'left right',
-                end: 'right left',
-                scrub: true,
+          if (media) {
+            gsap.fromTo(media, 
+              { x: '-15%' },
+              { 
+                x: '15%',
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: item,
+                  containerAnimation: horizontalTween,
+                  start: 'left right',
+                  end: 'right left',
+                  scrub: true,
+                }
               }
-            }
-          );
+            );
+          }
         });
       };
 

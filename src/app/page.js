@@ -67,8 +67,9 @@ export default function Home() {
       const xPos = (clientX / window.innerWidth - 0.5) * 40;
       const yPos = (clientY / window.innerHeight - 0.5) * 40;
 
-      if (parallaxLayersRef.current.length > 0) {
-        gsap.to(parallaxLayersRef.current, {
+      const validLayers = parallaxLayersRef.current.filter(el => el !== null);
+      if (validLayers.length > 0) {
+        gsap.to(validLayers, {
           x: (i) => xPos * (i + 1) * 0.2,
           y: (i) => yPos * (i + 1) * 0.2,
           duration: 1,
@@ -92,13 +93,14 @@ export default function Home() {
     const tlLoad = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
     gsap.set([titleRef.current, subtitleRef.current, ctaRef.current, scrollIndRef.current], { opacity: 0, y: 30 });
-    if (parallaxLayersRef.current.length > 0) {
-      gsap.set(parallaxLayersRef.current, { opacity: 0, scale: 1.1 });
+    const validLayers = parallaxLayersRef.current.filter(el => el !== null);
+    if (validLayers.length > 0) {
+      gsap.set(validLayers, { opacity: 0, scale: 1.1 });
     }
 
     tlLoad
       .to(heroCenterImgRef.current, { opacity: 1, scale: 1, duration: 2, ease: 'expo.out' })
-      .to(parallaxLayersRef.current, { opacity: 1, scale: 1, duration: 1.5, stagger: 0.1 }, '-=1.5')
+      .to(validLayers, { opacity: 1, scale: 1, duration: 1.5, stagger: 0.1 }, '-=1.5')
       .to(titleRef.current, { opacity: 1, y: 0, duration: 1.2 }, '-=1')
       .to(subtitleRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.8')
       .to(ctaRef.current, { opacity: 1, y: 0, duration: 1 }, '-=0.8')
@@ -129,11 +131,12 @@ export default function Home() {
       }
     });
 
-    heroTl.to(parallaxLayersRef.current[0], { x: '80%', y: '80%', rotate: 15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(parallaxLayersRef.current[1], { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(parallaxLayersRef.current[2], { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(parallaxLayersRef.current[3], { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0)
-      .to(heroCenterImgRef.current, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
+    if (parallaxLayersRef.current[0]) heroTl.to(parallaxLayersRef.current[0], { x: '80%', y: '80%', rotate: 15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0);
+    if (parallaxLayersRef.current[1]) heroTl.to(parallaxLayersRef.current[1], { x: '-80%', y: '80%', rotate: -15, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0);
+    if (parallaxLayersRef.current[2]) heroTl.to(parallaxLayersRef.current[2], { x: '80%', y: '-80%', rotate: -10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0);
+    if (parallaxLayersRef.current[3]) heroTl.to(parallaxLayersRef.current[3], { x: '-80%', y: '-80%', rotate: 10, scale: 0.5, opacity: 0, ease: 'power2.in' }, 0);
+    
+    heroTl.to(heroCenterImgRef.current, { scale: 1.5, opacity: 0, filter: 'blur(20px)', ease: 'power2.in' }, 0)
       .to(titleRef.current, { y: -50, opacity: 0, ease: 'power2.in' }, 0);
 
     let resizeHandler = null;

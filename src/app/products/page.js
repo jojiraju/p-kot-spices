@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { products } from '@/data/products';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight, Sparkles, Filter } from 'lucide-react';
 import { HiShoppingBag } from 'react-icons/hi2';
 import styles from './products.module.css';
@@ -13,9 +14,11 @@ import MenuOverlay from '@/components/common/MenuOverlay';
 
 export default function ProductsPage() {
   const { currency } = useCurrency();
+  const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('All');
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
+  const [loadingProductId, setLoadingProductId] = useState(null);
   const gridRef = useRef(null);
   const cardsRef = useRef([]);
 
@@ -115,12 +118,22 @@ export default function ProductsPage() {
                   <p className={styles.productDesc}>{product.description}</p>
                   
                   <div className={styles.cardActions}>
-                    <Link 
-                      href={`/checkout/${product.id}?w=1kg&q=1`}
+                    <button 
+                      onClick={() => {
+                        setLoadingProductId(product.id);
+                        router.push(`/checkout/${product.id}?w=1kg&q=1`);
+                      }}
                       className={styles.buyBtn}
+                      disabled={loadingProductId === product.id}
                     >
-                      <HiShoppingBag size={18} /> BUY NOW
-                    </Link>
+                      {loadingProductId === product.id ? (
+                        <div className={styles.btnLoader}></div>
+                      ) : (
+                        <>
+                          <HiShoppingBag size={18} /> BUY NOW
+                        </>
+                      )}
+                    </button>
                     <Link href={`/product/${product.id}`} className={styles.detailsBtn}>
                       DETAILS <ChevronRight size={16} />
                     </Link>

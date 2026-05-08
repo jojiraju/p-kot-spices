@@ -1,6 +1,6 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { products } from '@/data/products';
 import Link from 'next/link';
 import { ChevronLeft, Scale, Package } from 'lucide-react';
@@ -25,7 +25,9 @@ export default function ProductDetail() {
   const containerRef = useRef(null);
   const imageSectionRef = useRef(null);
   const contentSectionRef = useRef(null);
+  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
+  const [isBuying, setIsBuying] = useState(false);
 
 
 
@@ -195,12 +197,22 @@ export default function ProductDetail() {
           </div>
 
           <div className={styles.ctaSection}>
-            <Link 
-              href={`/checkout/${product.id}?w=${selectedWeight.label}&q=${quantity}`}
+            <button 
+              onClick={() => {
+                setIsBuying(true);
+                router.push(`/checkout/${product.id}?w=${selectedWeight.label}&q=${quantity}`);
+              }}
               className={styles.whatsappBtn}
+              disabled={isBuying}
             >
-              <HiShoppingBag size={20} /> BUY NOW — {symbol}{formattedTotalPrice}
-            </Link>
+              {isBuying ? (
+                <div className={styles.btnLoader}></div>
+              ) : (
+                <>
+                  <HiShoppingBag size={20} /> BUY NOW — {symbol}{formattedTotalPrice}
+                </>
+              )}
+            </button>
             <p className={styles.ctaNote}>* Prices are calculated based on your selected weight and quantity.</p>
           </div>
 

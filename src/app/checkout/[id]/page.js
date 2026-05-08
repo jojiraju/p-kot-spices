@@ -43,11 +43,11 @@ function CheckoutContent() {
   }
 
   const basePrice = currency === 'INR' ? product.priceINR : product.priceUSD;
-  const weightFactor = weight === '100g' ? 0.1 : 
-                       weight === '250g' ? 0.25 : 
-                       weight === '500g' ? 0.5 : 
-                       weight === '1kg' ? 1 : 
-                       weight === '5kg' ? 5 : 1;
+  const weightFactor = weight === '100g' ? 0.1 :
+    weight === '250g' ? 0.25 :
+      weight === '500g' ? 0.5 :
+        weight === '1kg' ? 1 :
+          weight === '5kg' ? 5 : 1;
 
   const unitPrice = parseFloat(basePrice.replace(/,/g, '')) * weightFactor;
   const totalPriceRaw = (unitPrice * quantity).toFixed(currency === 'INR' ? 0 : 2);
@@ -64,10 +64,13 @@ function CheckoutContent() {
     }
   };
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     const separator = '----------------------------------';
-    const messageText = 
+    const messageText =
       `*P-KOT SPICES - NEW ORDER*\n` +
       `${separator}\n\n` +
       `*PRODUCT DETAILS*\n` +
@@ -83,6 +86,9 @@ function CheckoutContent() {
 
     const encodedMessage = encodeURIComponent(messageText);
     window.open(`https://wa.me/919645067995?text=${encodedMessage}`, '_blank');
+
+    // Reset loading state after a delay or keep it if navigation is expected
+    setTimeout(() => setIsSubmitting(false), 2000);
   };
 
   return (
@@ -122,7 +128,7 @@ function CheckoutContent() {
                   <label>Phone Number</label>
                   <div className={styles.inputWrapper}>
                     <IoCallOutline className={styles.fieldIcon} />
-                    <input type="tel" name="phone" placeholder="WhatsApp number" required value={formData.phone} onChange={handleChange} spellCheck={false} />
+                    <input type="tel" name="phone" placeholder="Phone number" required value={formData.phone} onChange={handleChange} spellCheck={false} />
                   </div>
                 </div>
               </div>
@@ -146,8 +152,14 @@ function CheckoutContent() {
                 </div>
               </div>
 
-              <button type="submit" className={styles.submitBtn}>
-                PROCEED <HiArrowLongRight size={24} />
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <div className={styles.btnLoader}></div>
+                ) : (
+                  <>
+                    PROCEED <HiArrowLongRight size={24} />
+                  </>
+                )}
               </button>
             </form>
 

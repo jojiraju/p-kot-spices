@@ -312,15 +312,15 @@
 
 .submitBtn {
   margin-top: 16px;
-  background: var(--color-primary);
-  color: #000;
-  border: none;
+  background: #000;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
   padding: 24px;
   border-radius: 20px;
   font-family: var(--font-sans);
-  font-weight: 900;
-  font-size: 1rem;
-  letter-spacing: 0.15em;
+  font-weight: 800;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -329,12 +329,33 @@
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   text-transform: uppercase;
   width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.submitBtn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.submitBtn:hover::before {
+  left: 100%;
 }
 
 .submitBtn:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 50px rgba(249, 168, 37, 0.25);
-  background: #ffb300;
+  background: var(--color-primary);
+  color: #000;
+  box-shadow: none;
+  border-color: var(--color-primary);
+}
+
+.submitBtn:active {
+  transform: translateY(-2px) scale(0.98);
 }
 
 .submitBtn svg {
@@ -343,6 +364,19 @@
 
 .submitBtn:hover svg {
   transform: translateX(8px);
+}
+
+.btnLoader {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(249, 168, 37, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--color-primary);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 @media (max-width: 1150px) {

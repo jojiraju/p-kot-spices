@@ -19,6 +19,7 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
     city: '',
     pincode: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Clear form when closed
   useEffect(() => {
@@ -95,8 +96,13 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
 
 
     const encodedMessage = encodeURIComponent(messageText);
+    setIsSubmitting(true);
     window.open(`https://wa.me/919645067995?text=${encodedMessage}`, '_blank');
-    onClose();
+    
+    setTimeout(() => {
+      setIsSubmitting(false);
+      onClose();
+    }, 2000);
   };
 
   if (!isOpen) return null;
@@ -225,8 +231,14 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
             </div>
 
 
-            <button type="submit" className={styles.submitBtn}>
-              PROCEED <HiArrowLongRight size={24} />
+            <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
+              {isSubmitting ? (
+                <div className={styles.btnLoader}></div>
+              ) : (
+                <>
+                  PROCEED <HiArrowLongRight size={24} />
+                </>
+              )}
             </button>
           </form>
         </div>
