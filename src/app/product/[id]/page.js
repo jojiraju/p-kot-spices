@@ -8,9 +8,14 @@ import { HiShoppingBag } from 'react-icons/hi2';
 import styles from './product.module.css';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
 import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
+import BuyNowModal from '@/components/common/BuyNowModal';
+import { Minus, Plus } from 'lucide-react';
+
 
 export default function ProductDetail() {
   const { currency } = useCurrency();
@@ -19,6 +24,12 @@ export default function ProductDetail() {
   const params = useParams();
   const product = products.find((p) => p.id === params.id);
   const containerRef = useRef(null);
+  const imageSectionRef = useRef(null);
+  const contentSectionRef = useRef(null);
+  const [quantity, setQuantity] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,17 +51,17 @@ export default function ProductDetail() {
   const [activeImage, setActiveImage] = useState(product?.image);
 
   // Initial entrance animation
-  useEffect(() => {
-    if (!product) return;
+  useGSAP(() => {
+    if (!product || !imageSectionRef.current || !contentSectionRef.current) return;
     
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.fromTo(`.${styles.productImageSection}`, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2 })
-      .fromTo(`.${styles.productContentSection}`, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 1.2 }, '-=1')
-      .fromTo(`.${styles.backBtn}`, { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.8');
+    tl.fromTo(imageSectionRef.current, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2 })
+      .fromTo(contentSectionRef.current, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 1.2 }, '-=1');
   }, [product]);
 
+
   // Handle only image switch animation
-  useEffect(() => {
+  useGSAP(() => {
     if (!activeImage) return;
     
     gsap.fromTo(`.${styles.detailImage}`, 
@@ -58,6 +69,7 @@ export default function ProductDetail() {
       { opacity: 1, scale: 1, duration: 0.6, ease: 'power2.out' }
     );
   }, [activeImage]);
+
 
   if (!product) {
     return (
@@ -69,10 +81,13 @@ export default function ProductDetail() {
   }
 
   const basePrice = currency === 'INR' ? product.priceINR : product.priceUSD;
-  const calculatedPrice = (parseFloat(basePrice.replace(/,/g, '')) * selectedWeight.value).toFixed(currency === 'INR' ? 0 : 2);
-  const formattedPrice = new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US').format(calculatedPrice);
+  const unitPrice = parseFloat(basePrice.replace(/,/g, '')) * selectedWeight.value;
+  const totalPriceRaw = (unitPrice * quantity).toFixed(currency === 'INR' ? 0 : 2);
+  const formattedPrice = new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US').format(unitPrice.toFixed(currency === 'INR' ? 0 : 2));
+  const formattedTotalPrice = new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US').format(totalPriceRaw);
 
   const symbol = currency === 'INR' ? '₹' : '$';
+
   const whatsappLink = `https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ${symbol}${formattedPrice} \nPlease provide payment details.`)}`;
 
   return (
@@ -86,7 +101,8 @@ export default function ProductDetail() {
 
       <div className={styles.productDetailGrid}>
         {/* Left: Image Gallery */}
-        <div className={styles.productImageSection}>
+        <div className={styles.productImageSection} ref={imageSectionRef}>
+
           <div className={styles.mainImageContainer}>
             <img 
               src={activeImage || product.image} 
@@ -123,7 +139,8 @@ export default function ProductDetail() {
         </div>
 
         {/* Right: Content */}
-        <div className={styles.productContentSection}>
+        <div className={styles.productContentSection} ref={contentSectionRef}>
+
           <div className={styles.productHeader}>
             <span className={styles.productId}>PRODUCT 0{products.indexOf(product) + 1}</span>
             <h1 className={styles.productTitle}>{product.name}</h1>
@@ -149,6 +166,28 @@ export default function ProductDetail() {
             </div>
           </div>
 
+          <div className={styles.selectorSection}>
+            <div className={styles.selectorLabel}>
+              <HiShoppingBag size={16} /> NUMBER OF PACKETS
+            </div>
+            <div className={styles.quantityCounter}>
+              <button 
+                className={styles.counterBtn} 
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+              >
+                <Minus size={18} />
+              </button>
+              <span className={styles.quantityDisplay}>{quantity}</span>
+              <button 
+                className={styles.counterBtn} 
+                onClick={() => setQuantity(quantity + 1)}
+              >
+                <Plus size={18} />
+              </button>
+            </div>
+          </div>
+
+
           <div className={styles.productDescription}>
             <p className={styles.mainDesc}>{product.description}</p>
             <div className={styles.detailsBox}>
@@ -158,13 +197,28 @@ export default function ProductDetail() {
           </div>
 
           <div className={styles.ctaSection}>
-            <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className={styles.whatsappBtn}>
-              <HiShoppingBag size={20} /> BUY NOW
-            </a>
-            <p className={styles.ctaNote}>* Prices are calculated based on your selected weight.</p>
+            <button 
+              className={styles.whatsappBtn}
+              onClick={() => setIsModalOpen(true)}
+            >
+              <HiShoppingBag size={20} /> BUY NOW — {symbol}{formattedTotalPrice}
+            </button>
+            <p className={styles.ctaNote}>* Prices are calculated based on your selected weight and quantity.</p>
           </div>
+
         </div>
       </div>
+
+      <BuyNowModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        product={product}
+        selectedWeight={selectedWeight}
+        quantity={quantity}
+        totalPrice={formattedTotalPrice}
+        currencySymbol={symbol}
+      />
     </main>
+
   );
 }
