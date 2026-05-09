@@ -99,6 +99,10 @@ export default function ProductDetail() {
         setMenuOpen={setMenuOpen} 
       />
 
+      <button onClick={() => router.back()} className={styles.backBtn}>
+        <ChevronLeft size={18} /> BACK TO COLLECTION
+      </button>
+
       <div className={styles.productDetailGrid}>
         {/* Left: Image Gallery */}
         <div className={styles.productImageSection} ref={imageSectionRef}>

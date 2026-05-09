@@ -221,12 +221,14 @@
 
 /* Summary Card - Trendy Ticket Style */
 .summaryCard {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 32px;
   padding: 40px;
   position: sticky;
   top: 140px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
 }
 
 .productBrief {
@@ -253,16 +255,77 @@
 }
 
 .productText h3 {
-  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
   color: #fff;
-  margin-bottom: 6px;
-  font-weight: 600;
+  margin-bottom: 2px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 .productText p {
   color: #666;
   font-weight: 600;
   font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.quantityCounter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 16px;
+  border-radius: 16px;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.counterBtn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.counterBtn:hover {
+  background: var(--color-primary);
+  color: #000;
+  border-color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.counterBtn:active {
+  transform: scale(0.9);
+}
+
+.quantityDisplay {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: #fff;
+  min-width: 30px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.weightLabel {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  margin-left: 10px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  padding-left: 15px;
 }
 
 .priceBreakdown {
@@ -346,12 +409,17 @@
   left: 100%;
 }
 
-.submitBtn:hover {
+.submitBtn:not(:disabled):hover {
   transform: translateY(-8px) scale(1.02);
   background: var(--color-primary);
   color: #000;
   box-shadow: none;
   border-color: var(--color-primary);
+}
+
+.submitBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .submitBtn:active {

@@ -5,6 +5,7 @@ import { useParams, useSearchParams, useRouter } from 'next/navigation';
 import { products } from '@/data/products';
 import { IoLocationOutline, IoPersonOutline, IoCallOutline, IoChevronBack } from 'react-icons/io5';
 import { HiArrowLongRight } from 'react-icons/hi2';
+import { Minus, Plus } from 'lucide-react';
 import styles from '../checkout.module.css';
 import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
@@ -20,7 +21,7 @@ function CheckoutContent() {
   const product = products.find((p) => p.id === params.id);
 
   const weight = searchParams.get('w') || '1kg';
-  const quantity = parseInt(searchParams.get('q') || '1');
+  const [quantity, setQuantity] = useState(parseInt(searchParams.get('q') || '1'));
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
@@ -171,7 +172,24 @@ function CheckoutContent() {
                 </div>
                 <div className={styles.productText}>
                   <h3>{product.name}</h3>
-                  <p>{quantity} x {weight}</p>
+                  <div className={styles.quantityCounter}>
+                    <button 
+                      type="button"
+                      className={styles.counterBtn} 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className={styles.quantityDisplay}>{quantity}</span>
+                    <button 
+                      type="button"
+                      className={styles.counterBtn} 
+                      onClick={() => setQuantity(quantity + 1)}
+                    >
+                      <Plus size={14} />
+                    </button>
+                    <span className={styles.weightLabel}>{weight}</span>
+                  </div>
                 </div>
               </div>
 
