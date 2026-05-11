@@ -171,22 +171,6 @@ export const products = [
     details: 'Variety: Black Mustard. Purity: 99%. Cleaning: Machine Cleaned.',
   },
   {
-    id: 'fenugreek',
-    name: 'Fenugreek',
-    category: 'Other Common Spices',
-    priceINR: '220',
-    priceUSD: '2.99',
-    unit: 'kg',
-    description: 'Small, angular fenugreek seeds with a unique bitter-sweet flavor, widely used in spice blends and traditional medicine.',
-    image: '/products/fenugreek-packed.png',
-    gallery: [
-      '/products/fenugreek.png',
-      '/sequence/frame_0000.jpg',
-      '/sequence/frame_0001.jpg'
-    ],
-    details: 'Grade: Machine Cleaned. Color: Yellowish-Brown.',
-  },
-  {
     id: 'cumin',
     name: 'Cumin',
     category: 'Other Common Spices',
@@ -201,6 +185,22 @@ export const products = [
       '/sequence/frame_0001.jpg'
     ],
     details: 'Purity: 99.5%. Type: Whole Seeds. Aroma: Strong Earthy.',
+  },
+  {
+    id: 'fenugreek',
+    name: 'Fenugreek',
+    category: 'Other Common Spices',
+    priceINR: '220',
+    priceUSD: '2.99',
+    unit: 'kg',
+    description: 'Small, angular fenugreek seeds with a unique bitter-sweet flavor, widely used in spice blends and traditional medicine.',
+    image: '/products/fenugreek-packed.png',
+    gallery: [
+      '/products/fenugreek.png',
+      '/sequence/frame_0000.jpg',
+      '/sequence/frame_0001.jpg'
+    ],
+    details: 'Grade: Machine Cleaned. Color: Yellowish-Brown.',
   },
   {
     id: 'coriander-seeds',
