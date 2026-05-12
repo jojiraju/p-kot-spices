@@ -55,9 +55,18 @@ export default function ProductDetail() {
   useGSAP(() => {
     if (!product || !imageSectionRef.current || !contentSectionRef.current) return;
     
+    const isMobile = window.innerWidth <= 1024;
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.fromTo(imageSectionRef.current, { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 1.2 })
-      .fromTo(contentSectionRef.current, { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 1.2 }, '-=1');
+    
+    tl.fromTo(imageSectionRef.current, 
+      { opacity: 0, y: isMobile ? 20 : 0, x: isMobile ? 0 : -30 }, 
+      { opacity: 1, y: 0, x: 0, duration: 1.2 }
+    )
+    .fromTo(contentSectionRef.current, 
+      { opacity: 0, y: 30, x: isMobile ? 0 : 30 }, 
+      { opacity: 1, y: 0, x: 0, duration: 1.2 }, 
+      '-=1'
+    );
   }, [product]);
 
 

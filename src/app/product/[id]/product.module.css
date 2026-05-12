@@ -1,6 +1,6 @@
 .productDetailMain {
   min-height: 100vh;
-  background-color: #080605;
+  background-color: #0F0A08;
   color: #fff;
   padding: 120px 50px 0;
   display: flex;
@@ -167,7 +167,7 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(8,6,5,0.4), transparent);
+  background: linear-gradient(to top, #0F0A08 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -526,15 +526,11 @@
     padding: 100px 20px 60px;
   }
   .backBtn {
-    top: 30px;
-    left: 20px;
+    margin-bottom: 20px;
+    font-size: 0.7rem;
   }
-  .productTitle {
-    font-size: 3rem;
-  }
-  .imageContainer {
-    position: relative;
-    top: 0;
+  .mainImageContainer {
+    border-radius: 16px;
   }
 }
 

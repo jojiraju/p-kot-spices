@@ -160,8 +160,15 @@ export default function Home() {
           const img = images[index];
           if (img && img.complete) {
             context.globalAlpha = alpha;
-            const baseScale = Math.min(canvas.width / img.width, canvas.height / img.height) * 0.9;
-            const currentScale = baseScale * airplay.scale;
+            const isMobile = window.innerWidth <= 1024;
+            const baseScale = isMobile 
+              ? Math.max(canvas.width / img.width, canvas.height / img.height) 
+              : Math.min(canvas.width / img.width, canvas.height / img.height) * 0.9;
+            
+            // Apply a very aggressive overscale (40%) to completely hide the "CapCut" watermark
+            const overscale = 1.4;
+            const currentScale = baseScale * airplay.scale * overscale;
+            
             const w = img.width * currentScale;
             const h = img.height * currentScale;
             const x = (canvas.width - w) / 2;

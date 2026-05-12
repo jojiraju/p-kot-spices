@@ -32,7 +32,7 @@
 }
 
 .progressRingBackground {
-  stroke: rgba(255, 255, 255, 0.1);
+  stroke: transparent;
 }
 
 .progressRingCircle {
@@ -43,10 +43,32 @@
 
 .progressText {
   position: absolute;
-  font-family: var(--font-serif, serif);
-  font-size: 2.5rem;
-  font-weight: 500;
-  color: #ffffff;
-  letter-spacing: 0.05em;
-  margin-top: 5px;
+  bottom: -60px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  letter-spacing: 0.2em;
 }
+
+.logoWrapper {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  padding: 10px; /* Increased padding to be safe */
+  overflow: hidden;
+}
+
+.loaderLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Use cover to ensure it fills the circle */
+  border-radius: 50%; /* Force circular shape */
+  clip-path: circle(50%); /* Secondary clip for insurance */
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6)); /* Match header logo style */
+}
+

@@ -53,35 +53,38 @@ export default function Preloader() {
 
   if (isUnmounted) return null;
 
-  const radius = 70;
+  const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
     <div className={`${styles.preloader} ${isHiding ? styles.hide : ''}`}>
       <div className={styles.progressContainer}>
-        <svg className={styles.progressRing} width="160" height="160">
+        <svg className={styles.progressRing} width="120" height="120">
           <circle
             className={styles.progressRingBackground}
             strokeWidth="2"
             fill="transparent"
             r={radius}
-            cx="80"
-            cy="80"
+            cx="60"
+            cy="60"
           />
           <circle
             className={styles.progressRingCircle}
             strokeWidth="2"
             fill="transparent"
             r={radius}
-            cx="80"
-            cy="80"
+            cx="60"
+            cy="60"
             style={{
               strokeDasharray: circumference,
               strokeDashoffset: strokeDashoffset,
             }}
           />
         </svg>
+        <div className={styles.logoWrapper}>
+          <img src="/logo.png" alt="P-Kot Spices Logo" className={styles.loaderLogo} />
+        </div>
         <div className={styles.progressText}>
           {progress}%
         </div>

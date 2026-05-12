@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@100;200;300;400;500;600;700&display=swap');
 
 :root {
-  --color-bg: #1A110E; /* Deep very dark brown base */
+  --color-bg: #0F0A08; /* Deep black-brown base */
   --color-text: #FDF4E3; /* Warm off-white */
   --color-primary: #F9A825; /* Turmeric Yellow */
   --color-secondary: #D84315; /* Spice Orange */
