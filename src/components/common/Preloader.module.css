@@ -1,0 +1,52 @@
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-bg, #0b0f19);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  opacity: 1;
+  visibility: visible;
+}
+
+.preloader.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.progressContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.progressRing {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.progressRingBackground {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progressRingCircle {
+  stroke: var(--color-primary, #D6A848); 
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.progressText {
+  position: absolute;
+  font-family: var(--font-serif, serif);
+  font-size: 2.5rem;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  margin-top: 5px;
+}

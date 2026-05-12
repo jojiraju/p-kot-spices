@@ -11,6 +11,7 @@ import gsap from 'gsap';
 import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
+import Footer from '@/components/common/Footer';
 
 export default function ProductsPage() {
   const { currency } = useCurrency();
@@ -127,7 +128,11 @@ export default function ProductsPage() {
                       disabled={loadingProductId === product.id}
                     >
                       {loadingProductId === product.id ? (
-                        <div className={styles.btnLoader}></div>
+                        <div className={styles.premiumLoader}>
+                          <div className={styles.shimmerDot}></div>
+                          <div className={styles.shimmerDot}></div>
+                          <div className={styles.shimmerDot}></div>
+                        </div>
                       ) : (
                         <>
                           <HiShoppingBag size={18} /> BUY NOW
@@ -145,12 +150,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      <footer className={styles.footer}>
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} P-KOT Spices. Authenticity in every grain.</p>
-        </div>
-      </footer>
-
+      <Footer />
     </main>
   );
 }

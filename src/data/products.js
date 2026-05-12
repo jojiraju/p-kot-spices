@@ -1,26 +1,83 @@
 export const products = [
-  // 🌿 Main Spices
+  // 🔥 Ground Spices (Powders)
   {
-    id: 'black-pepper',
-    name: 'Black Pepper',
-    category: 'Main Spices',
-    priceINR: '750',
-    priceUSD: '9.99',
+    id: 'chilly-powder',
+    name: 'Chilly Powder',
+    category: 'Ground Spices',
+    priceINR: '450',
+    priceUSD: '5.99',
     unit: 'kg',
-    description: 'Premium Malabar black pepper, known for its bold flavor and intense pungency. Hand-harvested and sun-dried to perfection.',
-    image: '/products/black-pepper-packed.png',
+    description: 'Premium red chilly powder, finely ground from sun-dried chillies. Known for its vibrant color and balanced heat, it is the soul of Indian cuisine.',
+    image: '/products/chilly-powder-packed.png',
     gallery: [
-      '/products/black-pepper-packed.png',
-      '/products/black-pepper.png',
-      '/products/black-pepper-1.png',
-      '/sequence/frame_0000.jpg'
+      '/products/chilly-powder-packed.png',
+      '/products/chilly-powder.png'
     ],
-    details: 'Grade: Tellicherry Bold. Moisture: Max 12%. Purity: 99%. Origin: Malabar Coast.',
+    details: 'Purity: 100% Pure. Heat Level: Medium-Hot. Processing: Sun-dried & Cold-ground.',
+    features: ['100% Natural', 'No added colors', 'Cold-ground to retain oils', 'Vibrant Red Color'],
+    usage: 'Perfect for curries, marinades, and dry rubs. Add towards the middle of cooking for best flavor release.',
+    benefits: 'Rich in Vitamin C and antioxidants. Boosts metabolism and aids digestion.'
   },
+  {
+    id: 'garam-masala',
+    name: 'Garam Masala',
+    category: 'Ground Spices',
+    priceINR: '850',
+    priceUSD: '11.99',
+    unit: 'kg',
+    description: 'A masterfully crafted blend of premium warm spices. This authentic Garam Masala adds complexity, warmth, and a finishing touch of magic to your signature recipes.',
+    image: '/products/garam-masala-packed.png',
+    gallery: [
+      '/products/garam-masala-packed.png',
+      '/products/garam-masala.png'
+    ],
+    details: 'Blend: 12+ Premium Spices. Aroma: Intensely Aromatic. Quality: Traditional Recipe.',
+    features: ['Small-batch Blending', 'No Fillers', 'Includes Cardamom & Mace', 'Aromatic Preservation'],
+    usage: 'Best added towards the end of cooking or sprinkled as a garnish to preserve its delicate volatile oils.',
+    benefits: 'Warming spice blend that promotes digestive fire (Agni). Rich in phytonutrients.'
+  },
+  {
+    id: 'turmeric-powder',
+    name: 'Turmeric Powder',
+    category: 'Ground Spices',
+    priceINR: '380',
+    priceUSD: '5.49',
+    unit: 'kg',
+    description: 'Finely ground turmeric powder with high curcumin content. This golden spice is essential for flavor, color, and its renowned medicinal properties.',
+    image: '/products/turmeric-packed.png',
+    gallery: [
+      '/products/turmeric-packed.png',
+      '/products/turmeric-powder.png'
+    ],
+    details: 'Curcumin: 5%+. Type: Single Origin. Purity: No added colors.',
+    features: ['High Curcumin Content', 'Ethically Sourced', 'Triple-sifted for fineness', 'Antiseptic Properties'],
+    usage: 'Use in curries, golden milk (haldi doodh), or even as a natural coloring agent in rice and batters.',
+    benefits: 'Powerful anti-inflammatory and antioxidant. Supports heart health and brain function.'
+  },
+  {
+    id: 'coriander-powder',
+    name: 'Coriander Powder',
+    category: 'Ground Spices',
+    priceINR: '320',
+    priceUSD: '4.49',
+    unit: 'kg',
+    description: 'Highly aromatic coriander powder made from premium eagle-grade seeds. Adds a fresh, citrusy depth and serves as a cooling balance in spicy dishes.',
+    image: '/products/coriander-powder.png',
+    gallery: [
+      '/products/coriander-powder.png',
+      '/products/coriander-powder.png'
+    ],
+    details: 'Aroma: Fresh & Citrusy. Grade: Premium Eagle. Moisture: Max 10%.',
+    features: ['Eagle-grade Seeds', 'Steam-sterilized', 'Eco-friendly packaging', 'Intense Aroma'],
+    usage: 'A staple for spice pastes and dry masalas. Pairs excellently with cumin and turmeric.',
+    benefits: 'Aids digestion and helps maintain healthy cholesterol levels. Has cooling properties.'
+  },
+
+  // 🌿 Whole Spices
   {
     id: 'cardamom',
     name: 'Cardamom',
-    category: 'Main Spices',
+    category: 'Whole Spices',
     priceINR: '2400',
     priceUSD: '29.99',
     unit: 'kg',
@@ -35,9 +92,26 @@ export const products = [
     details: 'Grade: 8mm Bold. Color: Deep Green. Moisture: Max 10%. Purity: 99.9%.',
   },
   {
+    id: 'black-pepper',
+    name: 'Black Pepper',
+    category: 'Whole Spices',
+    priceINR: '750',
+    priceUSD: '9.99',
+    unit: 'kg',
+    description: 'Premium Malabar black pepper, known for its bold flavor and intense pungency. Hand-harvested and sun-dried to perfection.',
+    image: '/products/black-pepper-packed.png',
+    gallery: [
+      '/products/black-pepper-packed.png',
+      '/products/black-pepper.png',
+      '/products/black-pepper-1.png',
+      '/sequence/frame_0000.jpg'
+    ],
+    details: 'Grade: Tellicherry Bold. Moisture: Max 12%. Purity: 99%. Origin: Malabar Coast.',
+  },
+  {
     id: 'cinnamon',
     name: 'Cinnamon',
-    category: 'Main Spices',
+    category: 'Whole Spices',
     priceINR: '1200',
     priceUSD: '14.99',
     unit: 'kg',
@@ -52,25 +126,9 @@ export const products = [
     details: 'Type: Ceylon (True Cinnamon). Grade: Alba. Texture: Delicate quills.',
   },
   {
-    id: 'cloves',
-    name: 'Cloves',
-    category: 'Main Spices',
-    priceINR: '1100',
-    priceUSD: '12.99',
-    unit: 'kg',
-    description: 'Highly aromatic whole cloves, rich in essential oils. These hand-picked flower buds add deep, warm flavor to your culinary creations.',
-    image: '/products/cloves-packed.png',
-    gallery: [
-      '/products/cloves.png',
-      '/sequence/frame_0003.jpg',
-      '/sequence/frame_0004.jpg'
-    ],
-    details: 'Grade: Hand-picked. Color: Dark Brown. Aroma: Intense and Spicy.',
-  },
-  {
     id: 'nutmeg',
     name: 'Nutmeg',
-    category: 'Main Spices',
+    category: 'Whole Spices',
     priceINR: '950',
     priceUSD: '11.99',
     unit: 'kg',
@@ -84,9 +142,25 @@ export const products = [
     details: 'Size: Grade A. Type: Whole with shell. Origin: Kerala.',
   },
   {
+    id: 'cloves',
+    name: 'Cloves',
+    category: 'Whole Spices',
+    priceINR: '1100',
+    priceUSD: '12.99',
+    unit: 'kg',
+    description: 'Highly aromatic whole cloves, rich in essential oils. These hand-picked flower buds add deep, warm flavor to your culinary creations.',
+    image: '/products/cloves-packed.png',
+    gallery: [
+      '/products/cloves.png',
+      '/sequence/frame_0003.jpg',
+      '/sequence/frame_0004.jpg'
+    ],
+    details: 'Grade: Hand-picked. Color: Dark Brown. Aroma: Intense and Spicy.',
+  },
+  {
     id: 'mace',
     name: 'Mace',
-    category: 'Main Spices',
+    category: 'Whole Spices',
     priceINR: '2800',
     priceUSD: '34.99',
     unit: 'kg',
@@ -98,28 +172,10 @@ export const products = [
     ],
     details: 'Type: Whole Flower (Javitri). Color: Natural Red/Orange. Sorting: Hand-sorted.',
   },
-
-  // 🌶️ Other Common Spices
-  {
-    id: 'turmeric',
-    name: 'Turmeric',
-    category: 'Other Common Spices',
-    priceINR: '350',
-    priceUSD: '4.99',
-    unit: 'kg',
-    description: 'Vibrant golden turmeric with high curcumin content. Known for its earthy flavor and powerful health-promoting properties.',
-    image: '/products/turmeric-packed.png',
-    gallery: [
-      '/products/turmeric.png',
-      '/products/turmeric-1.png',
-      '/sequence/frame_0001.jpg'
-    ],
-    details: 'Curcumin Content: 5%+. Type: Whole/Powder. Purity: 100% Natural.',
-  },
   {
     id: 'ginger',
     name: 'Ginger',
-    category: 'Other Common Spices',
+    category: 'Whole Spices',
     priceINR: '450',
     priceUSD: '5.99',
     unit: 'kg',
@@ -136,9 +192,25 @@ export const products = [
     details: 'Type: Unbleached. Moisture: Max 12%. Quality: Grade A.',
   },
   {
+    id: 'turmeric',
+    name: 'Turmeric',
+    category: 'Whole Spices',
+    priceINR: '350',
+    priceUSD: '4.99',
+    unit: 'kg',
+    description: 'Vibrant golden turmeric with high curcumin content. Known for its earthy flavor and powerful health-promoting properties.',
+    image: '/products/turmeric-packed.png',
+    gallery: [
+      '/products/turmeric.png',
+      '/products/turmeric-1.png',
+      '/sequence/frame_0001.jpg'
+    ],
+    details: 'Curcumin Content: 5%+. Type: Whole/Powder. Purity: 100% Natural.',
+  },
+  {
     id: 'garlic',
     name: 'Garlic',
-    category: 'Other Common Spices',
+    category: 'Whole Spices',
     priceINR: '250',
     priceUSD: '3.49',
     unit: 'kg',
@@ -155,25 +227,9 @@ export const products = [
     details: 'Variety: Bold White. Type: Dried Bulbs/Flakes.',
   },
   {
-    id: 'mustard-seeds',
-    name: 'Mustard Seeds',
-    category: 'Other Common Spices',
-    priceINR: '180',
-    priceUSD: '2.49',
-    unit: 'kg',
-    description: 'Tiny, powerful black mustard seeds that add a nutty, sharp flavor when toasted or tempered in oil.',
-    image: '/products/mustard-seeds-packed.png',
-    gallery: [
-      'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?q=80&w=1000',
-      '/products/mustard-seeds.png',
-      'https://images.unsplash.com/photo-1593358052162-42171120025f?q=80&w=1000'
-    ],
-    details: 'Variety: Black Mustard. Purity: 99%. Cleaning: Machine Cleaned.',
-  },
-  {
     id: 'cumin',
     name: 'Cumin',
-    category: 'Other Common Spices',
+    category: 'Whole Spices',
     priceINR: '550',
     priceUSD: '6.99',
     unit: 'kg',
@@ -187,9 +243,25 @@ export const products = [
     details: 'Purity: 99.5%. Type: Whole Seeds. Aroma: Strong Earthy.',
   },
   {
+    id: 'mustard-seeds',
+    name: 'Mustard Seeds',
+    category: 'Whole Spices',
+    priceINR: '180',
+    priceUSD: '2.49',
+    unit: 'kg',
+    description: 'Tiny, powerful black mustard seeds that add a nutty, sharp flavor when toasted or tempered in oil.',
+    image: '/products/mustard-seeds-packed.png',
+    gallery: [
+      'https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?q=80&w=1000',
+      '/products/mustard-seeds.png',
+      'https://images.unsplash.com/photo-1593358052162-42171120025f?q=80&w=1000'
+    ],
+    details: 'Variety: Black Mustard. Purity: 99%. Cleaning: Machine Cleaned.',
+  },
+  {
     id: 'fenugreek',
     name: 'Fenugreek',
-    category: 'Other Common Spices',
+    category: 'Whole Spices',
     priceINR: '220',
     priceUSD: '2.99',
     unit: 'kg',
@@ -203,27 +275,9 @@ export const products = [
     details: 'Grade: Machine Cleaned. Color: Yellowish-Brown.',
   },
   {
-    id: 'coriander-seeds',
-    name: 'Coriander Seeds',
-    category: 'Other Common Spices',
-    priceINR: '280',
-    priceUSD: '3.49',
-    unit: 'kg',
-    description: 'Whole coriander seeds with a citrusy, floral, and slightly nutty aroma. Perfect for toasting and grinding fresh.',
-    image: '/products/coriander-seeds-packed.png',
-    gallery: [
-      '/products/coriander-seeds.png',
-      '/sequence/frame_0000.jpg',
-      '/sequence/frame_0001.jpg'
-    ],
-    details: 'Variety: Eagle Grade. Color: Natural Greenish-Brown.',
-  },
-
-  // 🌱 Other Ingredients Commonly Used
-  {
     id: 'star-anise',
     name: 'Star Anise',
-    category: 'Other Ingredients',
+    category: 'Whole Spices',
     priceINR: '1150',
     priceUSD: '13.99',
     unit: 'kg',
@@ -236,9 +290,25 @@ export const products = [
     details: 'Grade: Hand-picked whole. Broken: Less than 5%.',
   },
   {
+    id: 'coriander-seeds',
+    name: 'Coriander Seeds',
+    category: 'Whole Spices',
+    priceINR: '280',
+    priceUSD: '3.49',
+    unit: 'kg',
+    description: 'Whole coriander seeds with a citrusy, floral, and slightly nutty aroma. Perfect for toasting and grinding fresh.',
+    image: '/products/coriander-seeds-packed.png',
+    gallery: [
+      '/products/coriander-seeds.png',
+      '/sequence/frame_0000.jpg',
+      '/sequence/frame_0001.jpg'
+    ],
+    details: 'Variety: Eagle Grade. Color: Natural Greenish-Brown.',
+  },
+  {
     id: 'asafoetida',
     name: 'Asafoetida',
-    category: 'Other Ingredients',
+    category: 'Whole Spices',
     priceINR: '3500',
     priceUSD: '44.99',
     unit: 'kg',
@@ -252,9 +322,25 @@ export const products = [
     details: 'Type: Pure Compounded. Form: Solid/Powder.',
   },
   {
+    id: 'tamarind',
+    name: 'Tamarind',
+    category: 'Whole Spices',
+    priceINR: '200',
+    priceUSD: '2.49',
+    unit: 'kg',
+    description: 'Tangy and sweet tamarind pulp, perfect for adding a natural sourness to curries, chutneys, and sauces.',
+    image: '/products/tamarind-packed.png',
+    gallery: [
+      '/products/tamarind.png',
+      '/sequence/frame_0000.jpg',
+      '/sequence/frame_0001.jpg'
+    ],
+    details: 'Type: Seedless/With Seeds. Moisture: 15-20%.',
+  },
+  {
     id: 'curry-leaves',
     name: 'Curry Leaves',
-    category: 'Other Ingredients',
+    category: 'Whole Spices',
     priceINR: '150',
     priceUSD: '1.99',
     unit: 'kg',
@@ -267,20 +353,81 @@ export const products = [
     ],
     details: 'Type: Fresh/Dried. Origin: Organic Plantations.',
   },
+
+  // 🍯 Traditional Pickles
   {
-    id: 'tamarind',
-    name: 'Tamarind',
-    category: 'Other Ingredients',
-    priceINR: '200',
+    id: 'chicken-pickle',
+    name: 'Chicken Pickle',
+    category: 'Pickles',
+    priceINR: '350',
+    priceUSD: '6.99',
+    unit: 'jar',
+    description: 'A succulent and spicy traditional chicken pickle made with premium boneless chicken and a blend of aromatic Kerala spices.',
+    image: '/products/chicken-pickle-packed.png',
+    gallery: ['/products/chicken-pickle-packed.png'],
+    details: 'Type: Kerala Style Boneless. Net Weight: 400g. Shelf Life: 6 Months.',
+    features: ['Premium Boneless Chicken', 'Traditional Hand-ground Spices', 'No Artificial Preservatives', 'Aged for Intense Flavor'],
+    usage: 'Pairs exceptionally well with rice, parathas, and biryanis. A great savory side for any meal.',
+    benefits: 'High protein content. Rich in iron and essential vitamins from spices.'
+  },
+  {
+    id: 'beef-pickle',
+    name: 'Beef Pickle',
+    category: 'Pickles',
+    priceINR: '380',
+    priceUSD: '7.49',
+    unit: 'jar',
+    description: 'Slow-cooked beef pieces pickled in a rich, spicy, and tangy gravy. An authentic delicacy from the heart of Kerala.',
+    image: '/products/beef-pickle-packed.png',
+    gallery: ['/products/beef-pickle-packed.png'],
+    details: 'Type: Spicy Kerala Beef. Net Weight: 400g. Shelf Life: 6 Months.',
+    features: ['Slow-cooked Tender Beef', 'Authentic Malabar Recipe', 'Cold-pressed Coconut Oil', 'Rich Savory Taste'],
+    usage: 'The perfect companion for Ghee Rice, Appams, or plain Steamed Rice.',
+    benefits: 'Excellent source of protein and Vitamin B12. Warming properties.'
+  },
+  {
+    id: 'fish-pickle',
+    name: 'Fish Pickle',
+    category: 'Pickles',
+    priceINR: '400',
+    priceUSD: '7.99',
+    unit: 'jar',
+    description: 'Premium King Fish pieces pickled with a masterfully balanced blend of ginger, garlic, and fiery red chillies.',
+    image: '/products/fish-pickle-packed.png',
+    gallery: ['/products/fish-pickle-packed.png'],
+    details: 'Type: King Fish (Neymeen). Net Weight: 400g. Shelf Life: 6 Months.',
+    features: ['Premium King Fish', 'Traditional Coastal Recipe', 'Natural Vinegar Preservation', 'Intense Umami Flavor'],
+    usage: 'Enhances any seafood meal. Best enjoyed with Steamed Rice or Tapioca (Kappa).',
+    benefits: 'Rich in Omega-3 fatty acids and high-quality protein.'
+  },
+  {
+    id: 'lemon-pickle',
+    name: 'Lemon Pickle',
+    category: 'Pickles',
+    priceINR: '160',
     priceUSD: '2.49',
-    unit: 'kg',
-    description: 'Tangy and sweet tamarind pulp, perfect for adding a natural sourness to curries, chutneys, and sauces.',
-    image: '/products/tamarind-packed.png',
-    gallery: [
-      '/products/tamarind.png',
-      '/sequence/frame_0000.jpg',
-      '/sequence/frame_0001.jpg'
-    ],
-    details: 'Type: Seedless/With Seeds. Moisture: 15-20%.',
+    unit: 'jar',
+    description: 'Cured lemon wedges in a traditional tangy and spicy gravy. This pickle offers a sharp, zesty kick that elevates any vegetarian meal.',
+    image: '/products/lemon-pickle-packed.png',
+    gallery: ['/products/lemon-pickle-packed.png'],
+    details: 'Type: Traditional Cured Lemon. Net Weight: 400g. Shelf Life: 12 Months.',
+    features: ['Sun-cured Lemons', 'Traditional Spices', 'Oil-free available', 'Long-lasting Zest'],
+    usage: 'A staple for Curd Rice and light lunch meals. Helps in balancing heavy flavors.',
+    benefits: 'Excellent source of Vitamin C. Known to aid digestion and neutralize acidity.'
+  },
+  {
+    id: 'mango-pickle',
+    name: 'Mango Pickle',
+    category: 'Pickles',
+    priceINR: '180',
+    priceUSD: '2.99',
+    unit: 'jar',
+    description: 'Traditional home-style mango pickle made with premium raw mangoes and hand-ground spices. A perfect balance of tang and heat.',
+    image: '/products/mango-pickle-packed.png',
+    gallery: ['/products/mango-pickle-packed.png'],
+    details: 'Type: Avakaya Style. Net Weight: 400g. Shelf Life: 12 Months.',
+    features: ['Hand-cut Raw Mangoes', 'Grandmother\'s Recipe', 'Pure Mustard Oil/Sesame Oil', 'Probiotic Rich'],
+    usage: 'The quintessential Indian pickle for Rice, Rotis, and Dals.',
+    benefits: 'Rich in antioxidants and Vitamin C. Supports gut health through natural fermentation.'
   }
 ];

@@ -13,6 +13,7 @@ import { useGSAP } from '@gsap/react';
 import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
+import Footer from '@/components/common/Footer';
 import { Minus, Plus } from 'lucide-react';
 
 
@@ -194,10 +195,34 @@ export default function ProductDetail() {
 
           <div className={styles.productDescription}>
             <p className={styles.mainDesc}>{product.description}</p>
+            
             <div className={styles.detailsBox}>
               <h3><Package size={18} /> Specifications</h3>
               <p>{product.details}</p>
             </div>
+
+            {product.features && (
+              <div className={styles.featuresSection}>
+                <h3>KEY HIGHLIGHTS</h3>
+                <ul className={styles.featuresList}>
+                  {product.features.map((f, i) => <li key={i}>{f}</li>)}
+                </ul>
+              </div>
+            )}
+
+            {product.usage && (
+              <div className={styles.infoBlock}>
+                <h3>CULINARY USAGE</h3>
+                <p>{product.usage}</p>
+              </div>
+            )}
+
+            {product.benefits && (
+              <div className={styles.infoBlock}>
+                <h3>HEALTH BENEFITS</h3>
+                <p>{product.benefits}</p>
+              </div>
+            )}
           </div>
 
           <div className={styles.ctaSection}>
@@ -210,7 +235,11 @@ export default function ProductDetail() {
               disabled={isBuying}
             >
               {isBuying ? (
-                <div className={styles.btnLoader}></div>
+                <div className={styles.premiumLoader}>
+                  <div className={styles.shimmerDot}></div>
+                  <span className={styles.loaderText}>PREPARING ORDER</span>
+                  <div className={styles.shimmerDot}></div>
+                </div>
               ) : (
                 <>
                   <HiShoppingBag size={20} /> BUY NOW — {symbol}{formattedTotalPrice}
@@ -222,7 +251,7 @@ export default function ProductDetail() {
 
         </div>
       </div>
-
+      <Footer />
     </main>
 
   );

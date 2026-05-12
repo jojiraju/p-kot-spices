@@ -155,7 +155,11 @@ function CheckoutContent() {
 
               <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
                 {isSubmitting ? (
-                  <div className={styles.btnLoader}></div>
+                  <div className={styles.premiumLoader}>
+                    <div className={styles.shimmerDot}></div>
+                    <span className={styles.loaderText}>CONFIRMING ORDER</span>
+                    <div className={styles.shimmerDot}></div>
+                  </div>
                 ) : (
                   <>
                     PROCEED <HiArrowLongRight size={24} />

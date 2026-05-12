@@ -1,5 +1,6 @@
 import './globals.css';
 import ScrollToTop from '@/components/common/ScrollToTop';
+import Preloader from '@/components/common/Preloader';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 
 export const metadata = {
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <Preloader />
         <CurrencyProvider>
           {children}
           <ScrollToTop />
