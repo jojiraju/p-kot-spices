@@ -44,9 +44,9 @@ export const products = [
     priceUSD: '5.49',
     unit: 'kg',
     description: 'Finely ground turmeric powder with high curcumin content. This golden spice is essential for flavor, color, and its renowned medicinal properties.',
-    image: '/products/turmeric-packed.png',
+    image: '/products/turmeric-powder-packed.png',
     gallery: [
-      '/products/turmeric-packed.png',
+      '/products/turmeric-powder-packed.png',
       '/products/turmeric-powder.png'
     ],
     details: 'Curcumin: 5%+. Type: Single Origin. Purity: No added colors.',

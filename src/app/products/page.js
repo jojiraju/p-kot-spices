@@ -13,6 +13,21 @@ import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
 import Footer from '@/components/common/Footer';
 
+const CATEGORY_ORDER = {
+  'Ground Spices': 1,
+  'Whole Spices': 2,
+  'Pickles': 3
+};
+
+const sortedProducts = [...products].sort((a, b) => {
+  const orderA = CATEGORY_ORDER[a.category] || 99;
+  const orderB = CATEGORY_ORDER[b.category] || 99;
+  if (orderA !== orderB) {
+    return orderA - orderB;
+  }
+  return products.indexOf(a) - products.indexOf(b);
+});
+
 export default function ProductsPage() {
   const { currency } = useCurrency();
   const router = useRouter();
@@ -23,10 +38,10 @@ export default function ProductsPage() {
   const gridRef = useRef(null);
   const cardsRef = useRef([]);
 
-  const categories = ['All', ...new Set(products.map(p => p.category))];
+  const categories = ['All', ...new Set(sortedProducts.map(p => p.category))];
   const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+    ? sortedProducts 
+    : sortedProducts.filter(p => p.category === activeCategory);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -100,9 +115,6 @@ export default function ProductsPage() {
                       }}
                     />
                     <div className={styles.categoryBadge}>{product.category}</div>
-                    <div className={styles.packagingBadge}>
-                      <Sparkles size={10} /> PREMIUM PACK
-                    </div>
                     <div className={styles.overlay}>
                       <span>VIEW DETAILS</span>
                     </div>
