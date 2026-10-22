@@ -25,6 +25,7 @@ const normalize = (p) => ({
   unit: 'kg',
   ...p,
   features: Array.isArray(p.features) ? p.features : [],
+  packs: Array.isArray(p.packs) ? p.packs : [],
   gallery: Array.isArray(p.images) ? p.images : Array.isArray(p.gallery) ? p.gallery : [],
   inStock: p.inStock !== false,
 });
