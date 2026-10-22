@@ -1,7 +1,8 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { products } from '@/data/products';
+import { useProducts } from '@/context/ProductsContext';
+import { whatsappUrl } from '@/data/contact';
 import Link from 'next/link';
 import { ChevronLeft, Scale, Package } from 'lucide-react';
 import { HiShoppingBag } from 'react-icons/hi2';
@@ -14,14 +15,25 @@ import { useCurrency } from '@/context/CurrencyContext';
 import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
 import Footer from '@/components/common/Footer';
+import { isHtml, safeHtml } from '@/lib/richText';
 import { Minus, Plus } from 'lucide-react';
 
+
+// CMS text is HTML from the rich-text editor; older plain text is shown as before.
+function Rich({ text, className }) {
+  if (!text) return null;
+  const cls = `${styles.richText} ${className || ''}`;
+  return isHtml(text)
+    ? <div className={cls} dangerouslySetInnerHTML={{ __html: safeHtml(text) }} />
+    : <p className={className}>{text}</p>;
+}
 
 export default function ProductDetail() {
   const { currency } = useCurrency();
   const [menuOpen, setMenuOpen] = useState(false);
   const [headerActive, setHeaderActive] = useState(false);
   const params = useParams();
+  const { products, weights: weightOptions, loading } = useProducts();
   const product = products.find((p) => p.id === params.id);
   const containerRef = useRef(null);
   const imageSectionRef = useRef(null);
@@ -40,15 +52,11 @@ export default function ProductDetail() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const weightOptions = [
-    { label: '100g', value: 0.1 },
-    { label: '250g', value: 0.25 },
-    { label: '500g', value: 0.5 },
-    { label: '1kg', value: 1 },
-    { label: '5kg', value: 5 },
-  ];
-
-  const [selectedWeight, setSelectedWeight] = useState(weightOptions[3]); // Default 1kg
+  // The options come from the CMS; fall back to 1kg (or the first option) when nothing is chosen or the choice was removed.
+  const [selectedLabel, setSelectedLabel] = useState(null);
+  const selectedWeight = weightOptions.find((w) => w.label === selectedLabel)
+    || weightOptions.find((w) => w.label === '1kg')
+    || weightOptions[0];
   const [activeImage, setActiveImage] = useState(product?.image);
 
   // Initial entrance animation
@@ -82,6 +90,7 @@ export default function ProductDetail() {
 
 
   if (!product) {
+    if (loading) return <div className={styles.notFound}><h1>Loading…</h1></div>;
     return (
       <div className={styles.notFound}>
         <h1>Product Not Found</h1>
@@ -98,7 +107,7 @@ export default function ProductDetail() {
 
   const symbol = currency === 'INR' ? '₹' : '$';
 
-  const whatsappLink = `https://wa.me/919645067995?text=${encodeURIComponent(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ${symbol}${formattedPrice} \nPlease provide payment details.`)}`;
+  const whatsappLink = whatsappUrl(`Hi P-KOT Spices, I want to buy ${product.name}. \nQuantity: ${selectedWeight.label} \nTotal Price: ${symbol}${formattedPrice} \nPlease provide payment details.`);
 
   return (
     <main className={styles.productDetailMain} ref={containerRef}>
@@ -172,7 +181,7 @@ export default function ProductDetail() {
                 <button
                   key={opt.label}
                   className={`${styles.weightBtn} ${selectedWeight.label === opt.label ? styles.active : ''}`}
-                  onClick={() => setSelectedWeight(opt)}
+                  onClick={() => setSelectedLabel(opt.label)}
                 >
                   {opt.label}
                 </button>
@@ -203,7 +212,7 @@ export default function ProductDetail() {
 
 
           <div className={styles.productDescription}>
-            <p className={styles.mainDesc}>{product.description}</p>
+            <Rich className={styles.mainDesc} text={product.description} />
             
             <div className={styles.detailsBox}>
               <h3><Package size={18} /> Specifications</h3>
@@ -214,7 +223,9 @@ export default function ProductDetail() {
               <div className={styles.featuresSection}>
                 <h3>KEY HIGHLIGHTS</h3>
                 <ul className={styles.featuresList}>
-                  {product.features.map((f, i) => <li key={i}>{f}</li>)}
+                  {product.features.map((f, i) => (isHtml(f)
+                    ? <li key={i} dangerouslySetInnerHTML={{ __html: safeHtml(f) }} />
+                    : <li key={i}>{f}</li>))}
                 </ul>
               </div>
             )}
@@ -222,14 +233,14 @@ export default function ProductDetail() {
             {product.usage && (
               <div className={styles.infoBlock}>
                 <h3>CULINARY USAGE</h3>
-                <p>{product.usage}</p>
+                <Rich text={product.usage} />
               </div>
             )}
 
             {product.benefits && (
               <div className={styles.infoBlock}>
                 <h3>HEALTH BENEFITS</h3>
-                <p>{product.benefits}</p>
+                <Rich text={product.benefits} />
               </div>
             )}
           </div>
@@ -241,9 +252,11 @@ export default function ProductDetail() {
                 router.push(`/checkout/${product.id}?w=${selectedWeight.label}&q=${quantity}`);
               }}
               className={styles.whatsappBtn}
-              disabled={isBuying}
+              disabled={isBuying || product.inStock === false}
             >
-              {isBuying ? (
+              {product.inStock === false ? (
+                <>OUT OF STOCK</>
+              ) : isBuying ? (
                 <div className={styles.premiumLoader}>
                   <div className={styles.shimmerDot}></div>
                   <span className={styles.loaderText}>PREPARING ORDER</span>

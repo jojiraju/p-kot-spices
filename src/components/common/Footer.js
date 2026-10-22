@@ -1,12 +1,12 @@
 'use client';
+import { CONTACT } from '@/data/contact';
 import { FaInstagram, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import Link from 'next/link';
 import styles from './Common.module.css';
 
 export default function Footer() {
-  const whatsappNumber = '+919645067995';
-  const whatsappUrl = `https://wa.me/${whatsappNumber}`;
+  const whatsappUrl = `https://wa.me/${CONTACT.whatsappNumber}`;
 
   return (
     <footer className={styles.footer}>

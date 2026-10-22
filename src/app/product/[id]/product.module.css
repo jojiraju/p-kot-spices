@@ -555,3 +555,13 @@
     padding-top: 80px;
   }
 }
+
+/* Rich text coming from the CMS editor */
+.richText p { margin: 0 0 0.8em; }
+.richText p:last-child { margin-bottom: 0; }
+.richText ul, .richText ol { margin: 0 0 0.8em; padding-left: 1.3em; }
+.richText ul { list-style: disc; }
+.richText ol { list-style: decimal; }
+.richText li { margin-bottom: 0.3em; }
+.richText strong { color: #fff; font-weight: 700; }
+.richText a { color: var(--color-primary, #D6A848); text-decoration: underline; }

@@ -2,7 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useSearchParams, useRouter } from 'next/navigation';
-import { products } from '@/data/products';
+import { useProducts } from '@/context/ProductsContext';
+import { whatsappUrl } from '@/data/contact';
+import { saveOrder } from '@/lib/orders';
+import toast from 'react-hot-toast';
 import { IoLocationOutline, IoPersonOutline, IoCallOutline, IoChevronBack } from 'react-icons/io5';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import { Minus, Plus } from 'lucide-react';
@@ -18,7 +21,10 @@ function CheckoutContent() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { products, weights, loading } = useProducts();
   const product = products.find((p) => p.id === params.id);
+  // Declared before the early return below so hook order stays stable when a CMS product arrives late.
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const weight = searchParams.get('w') || '1kg';
   const [quantity, setQuantity] = useState(parseInt(searchParams.get('q') || '1'));
@@ -40,15 +46,14 @@ function CheckoutContent() {
   }, []);
 
   if (!product) {
-    return <div className={styles.checkoutMain}>Product not found</div>;
+    return <div className={styles.checkoutMain}>{loading ? 'Loading...' : 'Product not found'}</div>;
+  }
+  if (product.inStock === false) {
+    return <div className={styles.checkoutMain}>{product.name} is currently out of stock.</div>;
   }
 
   const basePrice = currency === 'INR' ? product.priceINR : product.priceUSD;
-  const weightFactor = weight === '100g' ? 0.1 :
-    weight === '250g' ? 0.25 :
-      weight === '500g' ? 0.5 :
-        weight === '1kg' ? 1 :
-          weight === '5kg' ? 5 : 1;
+  const weightFactor = weights.find((w) => w.label === weight)?.value ?? 1;
 
   const unitPrice = parseFloat(basePrice.replace(/,/g, '')) * weightFactor;
   const totalPriceRaw = (unitPrice * quantity).toFixed(currency === 'INR' ? 0 : 2);
@@ -65,9 +70,7 @@ function CheckoutContent() {
     }
   };
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     const separator = '----------------------------------';
@@ -85,11 +88,19 @@ function CheckoutContent() {
       `${separator}\n` +
       `_Please confirm this order and provide payment details._`;
 
-    const encodedMessage = encodeURIComponent(messageText);
-    window.open(`https://wa.me/919645067995?text=${encodedMessage}`, '_blank');
+    // Start saving to the CMS and open WhatsApp straight away (a popup opened after an await can be blocked).
+    const saving = saveOrder({ product, weight, quantity, currency, total: totalPriceRaw, ...formData });
+    window.open(whatsappUrl(messageText), '_blank');
 
-    // Reset loading state after a delay or keep it if navigation is expected
-    setTimeout(() => setIsSubmitting(false), 2000);
+    try {
+      await saving;
+      toast.success('Order placed! Please confirm it on WhatsApp.');
+    } catch (err) {
+      console.error(err);
+      toast.error('Your order could not be recorded, but you can still send it on WhatsApp.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

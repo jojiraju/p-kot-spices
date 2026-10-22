@@ -1,5 +1,5 @@
 'use client';
-import { products } from '@/data/products';
+import { useProducts } from '@/context/ProductsContext';
 import Link from 'next/link';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import styles from '../app/page.module.css';
@@ -7,7 +7,8 @@ import { useCurrency } from '@/context/CurrencyContext';
 
 export default function FeaturedProducts() {
   const { currency } = useCurrency();
-  const featured = products.slice(0, 4);
+  const { products } = useProducts();
+  const featured = products.filter((p) => p.inStock !== false).slice(0, 4);
 
   return (
     <section className={styles.featuredSection}>

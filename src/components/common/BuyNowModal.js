@@ -6,6 +6,9 @@ import styles from './BuyNowModal.module.css';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useCurrency } from '@/context/CurrencyContext';
+import { whatsappUrl } from '@/data/contact';
+import { saveOrder } from '@/lib/orders';
+import toast from 'react-hot-toast';
 
 
 
@@ -75,7 +78,7 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const separator = '----------------------------------';
@@ -95,14 +98,20 @@ export default function BuyNowModal({ isOpen, onClose, product, selectedWeight, 
       `_Please confirm this order and provide payment details._`;
 
 
-    const encodedMessage = encodeURIComponent(messageText);
     setIsSubmitting(true);
-    window.open(`https://wa.me/919645067995?text=${encodedMessage}`, '_blank');
-    
-    setTimeout(() => {
+    const saving = saveOrder({ product, weight: selectedWeight.label, quantity, currency, total: totalPrice, ...formData });
+    window.open(whatsappUrl(messageText), '_blank');
+
+    try {
+      await saving;
+      toast.success('Order placed! Please confirm it on WhatsApp.');
+    } catch (err) {
+      console.error(err);
+      toast.error('Your order could not be recorded, but you can still send it on WhatsApp.');
+    } finally {
       setIsSubmitting(false);
       onClose();
-    }, 2000);
+    }
   };
 
   if (!isOpen) return null;
