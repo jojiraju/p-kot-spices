@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { HiArrowLongRight } from 'react-icons/hi2';
 import styles from '../app/page.module.css';
 import { useCurrency } from '@/context/CurrencyContext';
+import { cardPrice } from '@/lib/stock';
 
 export default function FeaturedProducts() {
   const { currency } = useCurrency();
@@ -31,7 +32,21 @@ export default function FeaturedProducts() {
                 <span className={styles.productCategory}>{product.category}</span>
                 <h3 className={styles.productName}>{product.name}</h3>
                 <p className={styles.productPrice}>
-                  {currency === 'INR' ? `₹${product.priceINR}` : `$${product.priceUSD}`} / {product.unit}
+                  {(() => {
+                    const { price, original, percent } = cardPrice(product, currency);
+                    const sym = currency === 'INR' ? '₹' : '$';
+                    return (
+                      <>
+                        {sym}{price} / {product.unit}
+                        {original !== null && (
+                          <>
+                            {' '}<s style={{ opacity: 0.55, fontSize: '0.85em' }}>{sym}{original}</s>{' '}
+                            <span style={{ color: '#2e7d32', fontSize: '0.8em', fontWeight: 600 }}>{percent}% off</span>
+                          </>
+                        )}
+                      </>
+                    );
+                  })()}
                 </p>
               </div>
             </Link>

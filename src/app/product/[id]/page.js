@@ -17,7 +17,7 @@ import MenuOverlay from '@/components/common/MenuOverlay';
 import Footer from '@/components/common/Footer';
 import { isHtml, safeHtml } from '@/lib/richText';
 import { Minus, Plus } from 'lucide-react';
-import { sellOptions, lowStockNote } from '@/lib/stock';
+import { sellOptions, lowStockNote, discountPercent } from '@/lib/stock';
 
 
 // CMS text is HTML from the rich-text editor; older plain text is shown as before.
@@ -195,6 +195,12 @@ export default function ProductDetail() {
               <h1 className={styles.productTitle}>{product.name}</h1>
               <div className={styles.priceTag}>
                 {symbol}{formattedPrice} <span className={styles.unitText}>/ {selectedWeight.label}</span>
+                {selectedWeight.originalPrice > unitPrice && (
+                  <>
+                    {' '}<s style={{ opacity: 0.55, fontSize: '0.6em' }}>{symbol}{new Intl.NumberFormat(currency === 'INR' ? 'en-IN' : 'en-US').format(selectedWeight.originalPrice.toFixed(currency === 'INR' ? 0 : 2))}</s>
+                    {' '}<span style={{ color: '#2e7d32', fontSize: '0.5em', fontWeight: 600 }}>{discountPercent(product)}% off</span>
+                  </>
+                )}
               </div>
             </div>
 
@@ -289,7 +295,7 @@ export default function ProductDetail() {
                 {product.details && (
                   <div className={styles.detailsBox}>
                     <h3><Package size={18} /> Specifications</h3>
-                    <p>{product.details}</p>
+                    <Rich text={product.details} />
                   </div>
                 )}
 

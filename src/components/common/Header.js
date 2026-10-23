@@ -2,8 +2,10 @@
 import Link from 'next/link';
 import styles from './Common.module.css';
 import CurrencySwitcher from '../CurrencySwitcher';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Header({ headerActive, menuOpen, setMenuOpen }) {
+  const { user } = useAuth();
   return (
     <header className={`${styles.header} ${headerActive ? styles.active : ''}`}>
       <div className={styles.headerLogo}>
@@ -17,6 +19,7 @@ export default function Header({ headerActive, menuOpen, setMenuOpen }) {
         <Link href="/products" className={styles.navLink}>COLLECTION</Link>
         <Link href="/about" className={styles.navLink}>ABOUT</Link>
         <Link href="/contact" className={styles.navLink}>CONTACT</Link>
+        <Link href={user ? '/account' : '/login'} className={styles.navLink}>{user ? 'MY ORDERS' : 'LOGIN'}</Link>
       </nav>
 
       <CurrencySwitcher />

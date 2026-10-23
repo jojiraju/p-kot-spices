@@ -13,6 +13,7 @@ import Header from '@/components/common/Header';
 import MenuOverlay from '@/components/common/MenuOverlay';
 import Footer from '@/components/common/Footer';
 import { plainText } from '@/lib/richText';
+import { cardPrice } from '@/lib/stock';
 
 const CATEGORY_ORDER = {
   'Ground Spices': 1,
@@ -57,7 +58,7 @@ export default function ProductsPage() {
   const counts = Object.fromEntries(categories.map(c => [c, c === 'All' ? sortedProducts.length : sortedProducts.filter(p => p.category === c).length]));
 
   const filteredProducts = useMemo(() => {
-    const priceOf = (p) => parseFloat(String(currency === 'INR' ? p.priceINR : p.priceUSD).replace(/,/g, '')) || 0;
+    const priceOf = (p) => cardPrice(p, currency).price;
     const q = query.trim().toLowerCase();
     const list = sortedProducts.filter(p =>
       (activeCategory === 'All' || p.category === activeCategory) &&
@@ -251,7 +252,21 @@ export default function ProductsPage() {
                     <div className={styles.cardHeader}>
                       <h3 className={styles.productName}>{product.name}</h3>
                       <div className={styles.price}>
-                        {currency === 'INR' ? `₹${product.priceINR}` : `$${product.priceUSD}`}
+                        {(() => {
+                          const { price, original, percent } = cardPrice(product, currency);
+                          const sym = currency === 'INR' ? '₹' : '$';
+                          return (
+                            <>
+                              {original !== null && (
+                                <span className={styles.discountPill}>{percent}% OFF</span>
+                              )}
+                              <span className={styles.priceNow}>{sym}{price}</span>
+                              {original !== null && (
+                                <s className={styles.priceWas}>{sym}{original}</s>
+                              )}
+                            </>
+                          );
+                        })()}
                         <small>per {product.unit || 'kg'}</small>
                       </div>
                     </div>

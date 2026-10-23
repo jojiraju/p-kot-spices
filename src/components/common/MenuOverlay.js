@@ -1,8 +1,10 @@
 'use client';
 import Link from 'next/link';
 import styles from './Common.module.css';
+import { useAuth } from '@/context/AuthContext';
 
 export default function MenuOverlay({ menuOpen, setMenuOpen }) {
+  const { user } = useAuth();
   return (
     <div className={`${styles.menuOverlay} ${menuOpen ? styles.isOpen : ''}`}>
       <button className={styles.closeMenuBtn} onClick={() => setMenuOpen(false)}>
@@ -14,6 +16,7 @@ export default function MenuOverlay({ menuOpen, setMenuOpen }) {
         <Link href="/products" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Collection</Link>
         <Link href="/about" className={styles.menuLink} onClick={() => setMenuOpen(false)}>About Us</Link>
         <Link href="/contact" className={styles.menuLink} onClick={() => setMenuOpen(false)}>Contact</Link>
+        <Link href={user ? '/account' : '/login'} className={styles.menuLink} onClick={() => setMenuOpen(false)}>{user ? 'My Orders' : 'Login'}</Link>
       </nav>
     </div>
   );
