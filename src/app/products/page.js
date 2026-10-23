@@ -257,17 +257,20 @@ export default function ProductsPage() {
                           const sym = currency === 'INR' ? '₹' : '$';
                           return (
                             <>
+                              <span className={styles.priceLine}>
+                                {original !== null && (
+                                  <span className={styles.discountPct}>-{percent}%</span>
+                                )}
+                                <span className={styles.priceNow}>
+                                  <sup className={styles.currencySym}>{sym}</sup>{price}
+                                </span>
+                              </span>
                               {original !== null && (
-                                <span className={styles.discountPill}>{percent}% OFF</span>
-                              )}
-                              <span className={styles.priceNow}>{sym}{price}</span>
-                              {original !== null && (
-                                <s className={styles.priceWas}>{sym}{original}</s>
+                                <span className={styles.priceWas}>M.R.P.: <s>{sym}{original}</s></span>
                               )}
                             </>
                           );
                         })()}
-                        <small>per {product.unit || 'kg'}</small>
                       </div>
                     </div>
                     <p className={styles.productDesc}>{plainText(product.description)}</p>

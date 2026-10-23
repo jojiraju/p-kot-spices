@@ -77,7 +77,8 @@ export function ProductsProvider({ children }) {
     if (cms.length === 0) return staticProducts.map(normalize); // CMS empty or unreachable
     // The CMS is the source of truth; bundled data only fills fields the CMS record lacks.
     const bundled = new Map(staticProducts.map((p) => [p.id, p]));
-    return cms.map((c) => normalize({ ...bundled.get(c.id), ...c }));
+    // Products switched to inactive in the CMS are left out everywhere on the site.
+    return cms.filter((c) => c.active !== false).map((c) => normalize({ ...bundled.get(c.id), ...c }));
   }, [cms, db]);
 
   return (

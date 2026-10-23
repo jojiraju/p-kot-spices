@@ -913,54 +913,50 @@
 
 .price {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 10px;
-  font-size: 1.15rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   line-height: 1.1;
+}
+
+.priceLine {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.discountPct {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #ff6b5e;
 }
 
 .priceNow {
-  order: 1;
-  font-size: 1.5rem;
-  line-height: 1.1;
+  font-size: 1.9rem;
+  line-height: 1;
   white-space: nowrap;
+}
+
+.currencySym {
+  font-size: 0.95rem;
+  font-weight: 500;
+  vertical-align: top;
+  position: relative;
+  top: 0.18em;
+  margin-right: 2px;
 }
 
 .priceWas {
-  order: 2;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.85rem;
+  font-weight: 400;
   color: #9a8a7e;
-  text-decoration-color: rgba(253, 244, 227, 0.5);
   white-space: nowrap;
 }
 
-.discountPill {
-  order: 3;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: #2e7d32;
-  color: #fff;
-  font-family: var(--font-sans);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.4;
-  white-space: nowrap;
-}
-
-.price small {
-  order: 4;
-  display: block;
-  margin: 0;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-align: left;
-  color: #b09a86;
+.priceWas s {
+  text-decoration-color: rgba(253, 244, 227, 0.45);
 }
 
 .productDesc {
